@@ -13,12 +13,29 @@
   - **Download the binaries tarball** (`IHE-Gazelle-docker-binaries.tar.gz`, ~513MB)
     from Google Drive:
     <https://drive.google.com/file/d/1qVVdGawFnavEfpxlayp78yEbQDo8eGVg/view?usp=sharing>
-    and extract it at the repo root:
+    Download it **into the cloned repo's root directory** (the tarball contains
+    relative paths, so it must be extracted there):
     ```bash
-    # browser: open the link above and click Download, save into the repo root; or CLI:
+    cd IHE-Gazelle-docker                        # the repo root, right after git clone
+    # browser: open the link above, click Download, then move the file here; or CLI:
     pip install gdown && gdown 1qVVdGawFnavEfpxlayp78yEbQDo8eGVg
-    tar xzf IHE-Gazelle-docker-binaries.tar.gz   # populates downloads/ and keycloak/keycloak-config-cli-26.5.5.jar
+    tar xzf IHE-Gazelle-docker-binaries.tar.gz
+    rm IHE-Gazelle-docker-binaries.tar.gz        # no longer needed after extraction
     ```
+    After extraction the files land exactly where the builds expect them:
+    ```
+    IHE-Gazelle-docker/
+    ├── downloads/                              ← 12 files appear here
+    │   ├── gazelle-tm-ear-12.1.0-patched.ear
+    │   ├── jboss-eap-6.1.0.Alpha.zip
+    │   ├── zulu7.56.0.11-ca-jdk7.0.352-linux_x64.tar.gz
+    │   └── … (see volume 06 for the full inventory)
+    └── keycloak/
+        └── keycloak-config-cli-26.5.5.jar      ← appears here
+    ```
+    Verify with `ls downloads/` — you should see 12 files. If you extracted somewhere
+    else by mistake, move the resulting `downloads/` directory and the
+    `keycloak-config-cli-26.5.5.jar` into the matching repo paths manually.
     It contains ~480MB of pre-fetched binaries (Zulu JDK 7, the JBoss EAP zip, the
     patched TM EAR, Keycloak-related jars… see volume 06) — **without it the
     jboss/keycloak images cannot be built**, and several upstream sources no longer
