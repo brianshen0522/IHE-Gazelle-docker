@@ -1,0 +1,112 @@
+# Define templates
+include:
+  - project: ${GITLAB_CI_TEMPLATES_PATH}
+    file:
+      - ${GITLAB_CI_TEMPLATES_FILE}
+      - 'CI/stages/schedule.yaml'
+    ref: 'master'
+
+# Define stages
+stages:
+  - prepare
+  - build
+  - test
+  - publish
+  - security
+  - release
+  - upgrade
+  - clean
+  - schedule
+  - scheduled-jobs
+
+# Define global variables
+variables:
+  P_MAVEN_IMAGE_TAG: "3.9.6-openjdk-21-slim"
+
+compile/unit-test:
+  stage: build
+  extends:
+    - .buildJavaMavenTest
+
+package:
+  stage: build
+  extends:
+    - .buildJavaMavenPackageWithQuarkus
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipTests"
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+integration-tests:
+  stage: test
+  extends:
+    - .testJavaMavenIntegrationTestsWithDocker
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipUTs"
+
+security/dependenciesWithOwaspDependencyCheck:
+  stage: test
+  extends:
+    - .testSecurityDependenciesForJavaWithOwaspDependencyCheck
+  needs:
+    - job: compile/unit-test
+      artifacts: false
+
+static-analysis:
+  stage: test
+  extends:
+    - .testJavaMavenSonarAnalysis
+  variables:
+    P_MAVEN_IMAGE_TAG: "3.9.6-openjdk-21-slim"
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+install-cache-repo:
+  stage: publish
+  extends:
+    - .publishJavaMavenInstall
+  needs:
+    - job: package
+      artifacts: true
+
+publish-code:
+  stage: publish
+  extends:
+    - .publishJavaMavenQuarkusDeploy
+  needs:
+    - job: package
+      artifacts: true
+    - job: static-analysis
+      artifacts: false
+
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForQuarkus
+
+release/dockerImage:
+  stage: release
+  extends:
+    - .releaseDockerWithQuarkus
+  needs: [ "release/code" ]
+
+release/documentation:
+  stage: release
+  extends:
+    - .releaseDocumentation
+  variables:
+    USER_DOCUMENTATION_APP_NAME: "Maestro"
+    JIRA_COMPONENT_NAME: "maestro"
+  needs: [ "release/code" ]
+
+mutator-schedule:
+  stage: schedule
+  extends:
+    - .createMutationNightlyPipeline
+  needs:
+    - job: static-analysis
+  variables:
+    CRON_SCHEDULE: "05 01 * * *"
+  allow_failure: false

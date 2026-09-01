@@ -1,0 +1,58 @@
+{
+  "uuid": "c9f7053d-248f-4600-9757-d510811b29a4",
+  "testCounters": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "undefined": 0,
+    "unexpectedErrors": 0
+  },
+  "testRunReports": [
+    {
+      "dateTime": "2024-11-08T11:19:36.387+00:00",
+      "result": "PASSED",
+      "test": {
+        "id": "testId"
+      },
+      "stepRunReports": [
+        {
+          "name": "step name",
+          "type": "VALIDATION",
+          "result": "PASSED"
+        }
+      ]
+    }
+  ],
+  "subReports": [
+    {
+      "uuid": "c9f7053d-248f-4600-9757-d510811b29a4",
+      "dateTime": "2024-11-08T11:19:36.385+00:00",
+      "result": "PASSED",
+      "testCounters": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "undefined": 0,
+        "unexpectedErrors": 0
+      },
+      "testRunReports": [
+        {
+          "dateTime": "2024-11-08T11:19:36.387+00:00",
+          "result": "PASSED",
+          "test": {
+            "id": "testId"
+          },
+          "stepRunReports": [
+            {
+              "name": "step name",
+              "type": "VALIDATION",
+              "result": "PASSED"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dateTime": "2024-11-08T11:19:36.385+00:00",
+  "result": "PASSED"
+}

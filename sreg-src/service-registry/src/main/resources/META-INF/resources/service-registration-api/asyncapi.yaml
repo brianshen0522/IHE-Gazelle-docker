@@ -1,0 +1,276 @@
+asyncapi: 3.0.0
+info:
+  title: Service Registration API
+  description: WebSocket API for service registration.
+  version: 2.0.0
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  service-registry:
+    description: WebSocket server for service registration.
+    host: '{fqdn}'
+    pathname: /service-registry
+    protocol: ws
+    variables:
+      fqdn:
+        description: Fully qualified domain name of the service registry.
+        default: localhost:8097
+defaultContentType: application/json
+channels:
+  service-registration:
+    address: '/service-registration/{instanceId}/{replicaId}'
+    description: Channel for a service to connect and register.
+    messages:
+      service:
+        $ref: '#/components/messages/service'
+      outcome:
+        $ref: '#/components/messages/outcome'
+    bindings:
+      http:
+        method: GET
+        headers:
+          Upgrade: websocket
+          Connection: Upgrade
+        query:
+          properties:
+            instanceId:
+              type: string
+              description: Unique identifier for the service instance.
+            replicaId:
+              type: string
+              description: Identifier for the specific replica of the service instance.
+operations:
+  connectAndRegister:
+    title: Connect and Register Service
+    description: |
+      Connect a service to Service-Registry and register its metadata.
+      The connection should be kept open as long as the service is up. When the connection closes, Service-Registry will consider the service down.
+      The registration message should be resent approximately every minute as a heartbeat.
+    channel:
+      $ref: '#/channels/service-registration'
+    action: send
+    messages:
+      - $ref: '#/channels/service-registration/messages/service'
+    reply:
+      messages:
+        - $ref: '#/channels/service-registration/messages/outcome'
+      channel:
+        $ref: '#/channels/service-registration'
+components:
+  messages:
+    service:
+      title: Secured Service Metadata
+      summary: Service definition to register
+      payload:
+        $ref: '#/components/schemas/SecuredRegistration'
+    outcome:
+      title: Outcome
+      summary: Outcome of the registration, used to communicate success or failure.
+      payload:
+        $ref: '#/components/schemas/Outcome'
+  schemas:
+    SecuredRegistration:
+      description: Secured version of the Service schema requiring authentication.
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Service'
+      properties:
+        authorization:
+          description: OIDC Authorization token
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJncm91cHMiOlsib3JnOktFUkVWQUwiLCJyb2xlOm1vbml0b3IiLCJ1c2VyIl19.1Cikqo2OmM6jPYsvveG-StiQEQN02ocfmkjXOsr_3kY
+    Service:
+      description: Represents a service in the Gazelle Test Bed.
+      type: object
+      required:
+        - name
+        - version
+        - instanceId
+        - replicaId
+      properties:
+        name:
+          description: The name of the service.
+          type: string
+          example: XML Validator
+        version:
+          description: The version of the service.
+          type: string
+          example: 3.2.1
+        instanceId:
+          description: ID to uniquely identity that deployment instance. At least 5 hexadecimal chars.
+          type: string
+          example: 1a2b3c4d5e
+        replicaId:
+          description: ID to uniquely identity that replica in a deployment instance.
+            At least 3 hexadecimal chars.
+          type: string
+          example: 001
+        description:
+          description: A brief description of the service.
+          type: string
+          example: This service validates XML documents against a XSD schema and Schematrons.
+        providedInterfaces:
+          description: List of interfaces provided by the service.
+          type: array
+          items:
+            $ref: "#/components/schemas/ProvidedInterface"
+        consumedInterfaces:
+          description: List of interfaces consumed by the service.
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsumedInterface"
+    Outcome:
+      description: Represents the outcome of a service registration operation.
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          description: Indicates status of the registration.
+          type: string
+          enum:
+            - SUCCESS
+            - FAILURE
+          example: FAILURE
+        message:
+          description: A message providing additional information about the outcome.
+          type: string
+          example: Service version is missing.
+    ConsumedInterface:
+      description: Represents an interface consumed by a service
+      required:
+        - interfaceName
+      type: object
+      properties:
+        interfaceName:
+          description: The name of the consumed interface.
+          type: string
+          example: SVS Repository API
+        required:
+          description: Indicates if the service requires this consumed interface to
+            operate.
+          default: false
+          type: boolean
+          example: true
+        supportedVersions:
+          description: The supported versions of the consumed interface.
+          type: array
+          items:
+            type: string
+          example: "['1.0', '2.0']"
+        supportedBindings:
+          description: The supported bindings for this consumed interface.
+          type: array
+          items:
+            type: string
+          example: "['REST', 'HTTP_SOAP']"
+    ProvidedInterface:
+      description: Represents an interface provided by a service
+      required:
+        - interfaceName
+        - interfaceVersion
+        - bindings
+      type: object
+      properties:
+        interfaceName:
+          description: The name of the provided interface.
+          type: string
+          example: Validation Service API
+        interfaceVersion:
+          description: The version of the provided interface.
+          type: string
+          example: "1.0"
+        bindings:
+          description: The technical bindings for this provided interface.
+          type: array
+          items:
+            $ref: "#/components/schemas/Binding"
+    Binding:
+      description: Abstract representation a technical binding of an interface. It
+        is used to declare the protocol and transport used
+      type: object
+      discriminator: '@type'
+      required:
+        - '@type'
+      properties:
+        '@type':
+          description: the type of the binding concretion
+          type: string
+        secured:
+          description: Indicates if the binding has secured methods defined.
+          type: boolean
+          readOnly: true
+          example: true
+        securedMethods:
+          description: The set of secured methods supported for this binding.
+          type: array
+          items:
+            type: string
+          enum:
+            - m2m
+            - oidc
+            - cas
+            - api-key
+            - ip-login
+          uniqueItems: true
+    HttpRestBinding:
+      description: Represents an HTTP REST binding for an interface
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Binding'
+      required:
+        - serviceUrl
+      properties:
+        '@type':
+          const: REST
+        serviceUrl:
+          description: "The service URL for this HTTP REST binding. It is usually\
+            \ not the complete endpoint, as resource names and paths are part of the\
+            \ interface contract."
+          type: string
+          example: https://example.com/xml-validator/rest
+    HttpSoapBinding:
+      description: Represents an HTTP SOAP binding for an interface
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Binding'
+      required:
+        - wsdlUrl
+      properties:
+        '@type':
+          const: HTTP_SOAP
+        wsdlUrl:
+          description: The WSDL URL for this HTTP SOAP binding
+          type: string
+          example: https://example.com/service?wsdl
+    WebBinding:
+      description: Represents an Web UI binding for an interface
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Binding'
+      required:
+        - webUrl
+      properties:
+        '@type':
+          const: WEB
+        webUrl:
+          description: "The web URL for this binding, typically the location of the\
+            \ web UI."
+          type: string
+          example: https://www.example.com/index.html
+    WebSocketBinding:
+      description: Represents a WebSocket binding for an interface
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Binding'
+      required:
+        - webSocketUrl
+      properties:
+        '@type':
+          const: WEB_SOCKET
+        webSocketUrl:
+          description: The WebSocket URL for this binding
+          type: string
+          example: wss://www.example.com/socket

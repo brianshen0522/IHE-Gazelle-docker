@@ -1,0 +1,7 @@
+project_id: '4960'
+api_token_env: 'CROWDIN_API_TOKEN'
+preserve_hierarchy: true
+files:
+  - source: '/locales/sources.json'
+    dest: '/gazelle_user_interface/gzl_user_interface_translation.json'
+    translation: '/locales/%two_letters_code%/gzl_user_interface_translation.json'

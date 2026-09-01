@@ -1,0 +1,12 @@
+packages:
+  - '.'
+
+allowBuilds:
+  '@heroui/shared-utils': true
+  core-js-pure: false
+  esbuild: false
+  node: false
+  sharp: false
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - "@gazelle/gazelle-component-ui"

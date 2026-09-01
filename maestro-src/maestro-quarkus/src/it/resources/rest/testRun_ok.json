@@ -1,0 +1,22 @@
+{
+  "test": {
+    "id": "1",
+    "name": "name1",
+    "steps": [
+      {
+        "name": "step1",
+        "type": "UNIT_TEST",
+        "properties": [
+          {
+            "name": "requiredInput",
+            "value": "test",
+            "type": "STRING"
+          }
+        ]
+      }
+    ]
+  },
+  "accessControlList": {
+    "isPublic": true
+  }
+}

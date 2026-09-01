@@ -1,0 +1,206 @@
+<!--Default template for gazelle home page-->
+<!--This template is an example and can be customized.-->
+
+<!--@author Valentin LORAND-->
+<!--@version 1.0-->
+<!--@date October 2025-->
+<!--All rights reserved IHE-Europe 2025-->
+
+<!--Available images :-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Test-execution.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Message-capture.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Simulation-portal.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Validation-portal.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/User-management.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Documentation.png-->
+
+<body>
+
+<!--CSS injection -->
+<div>
+    <style>
+        /*Add you CSS customizations here*/
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+        }
+        tbody { border: 1px solid #f2f2f2; }
+
+        th {
+            background-color: #e0eaf2 !important;
+            color: #333;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td { padding: 10px;border: none; }
+        td > a { text-decoration: none !important; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+
+        /* App card styling */
+        .app-card:hover { background-color: whitesmoke; }
+        .app-card {
+            background-color: white;
+            border: 2px solid #e5dcff;
+            border-radius: 5px;
+            padding: 5px;
+            width: 380px;
+            height: 330px;
+            text-decoration: none;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</div>
+
+<!--Welcome message + Information -->
+<div class="mx-10 rounded-xl bg-white shadow-sm p-3" style="border: 2px solid #e5dcff;">
+    <div>
+        <h2 id="msg-welcome" class="text-purple text-center">Gazelle Interoperability Test Bed</h2>
+    </div>
+    <div class="flex flex-row w-full">
+        <div class="basis-128 w-full"
+             style="background-color: #f8d7da; color: #842029; margin: 20px; padding: 10px; border-radius: 8px; text-align: center;">
+            <div class="flex flex-row w-full items-center justify-center gap-3">
+                <!-- https://lucide.dev/icons/triangle-alert -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-triangle-alert-icon lucide-triangle-alert">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
+                    <path d="M12 9v4"/>
+                    <path d="M12 17h.01"/>
+                </svg>
+                <h3 style="color: #842029;">Example warning</h3>
+            </div>
+            <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pharetra, ipsum a
+                consectetur porta, erat lorem tempor odio, ut ornare metus magna non sem. Aenean sollicitudin nisl
+                tellus, nec imperdiet urna consectetur et. Curabitur pellentesque dapibus lorem. Sed dictum nec urna sed
+                molestie. Suspendisse commodo tincidunt sapien vitae suscipit. Suspendisse pretium libero suscipit
+                vulputate egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+                curae; </p>
+        </div>
+        <div class="basis-64">
+            <img class="m-auto items-center justify-center h-full" width="250"
+                 src="${SCHEME}://${FQDN}/gazelle/assets/gz_logo.svg" alt="Gazelle logo">
+        </div>
+    </div>
+</div>
+<br/>
+
+<!--Grid of applications -->
+<div class="mx-10" style="display: grid; justify-content: space-evenly; align-self: center; align-items: center; flex: 0 0 15%; grid-template-columns: repeat(auto-fit, minmax(300px, auto)); gap: 2rem;">
+    <a class="app-card" href="${SCHEME}://${FQDN}/tm" title="Open application">
+        <img id="img-card-1" alt="Test Management" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Test-execution.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Test Management
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Access to test design application to create, edit tests of Gazelle</p>
+        </div>
+        <p id="link-card-1" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+    <a class="app-card" href="${SCHEME}://${FQDN}/gazelle/validation-portal/profiles" title="Open application">
+        <img id="img-card-2" alt="Validation portal" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Validation-portal.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Validation portal
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Validates your documents with validation portal service.</p>
+        </div>
+        <p id="link-card-2" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+    <a class="app-card" href="${SCHEME}://${FQDN}/gazelle/simulation-portal/sequences" title="Open application">
+        <img id="img-card-3" alt="Simulation portal" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Simulation-portal.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Simulation portal
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Test your systems with the simulation portal service.</p>
+        </div>
+        <p id="link-card-3" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+</div>
+<br/>
+
+<!-- Text content -->
+<div class="mx-10 rounded-xl bg-white shadow-sm p-3" style="border: 2px solid #e5dcff;">
+    <!-- https://lucide.dev/icons/notebook-pen -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-pen-icon lucide-notebook-pen inline"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>    <h3 class="inline align-middle">Write your main content here</h3>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras laoreet erat ut purus vehicula tempus dignissim at
+        libero. Nunc vitae leo vitae urna rhoncus accumsan eget in lacus. Sed in diam porta, egestas tellus sed, varius
+        nulla. Donec quis molestie risus. Suspendisse eu nisl et turpis aliquet sollicitudin. Class aptent taciti
+        sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed efficitur convallis quam, ac
+        hendrerit nulla pretium ut. Integer at euismod leo, et ultricies erat. Ut sed mauris id nulla posuere tempor sed
+        sed massa.
+        Vivamus feugiat facilisis metus a pharetra. Maecenas a gravida augue. Pellentesque habitant morbi tristique
+        senectus et netus et malesuada fames ac turpis egestas. Morbi id fermentum odio. Pellentesque habitant morbi
+        tristique senectus et netus et malesuada fames ac turpis egestas. Donec egestas facilisis tortor sagittis
+        sollicitudin. Morbi elit diam, accumsan ac condimentum vel, lobortis ac enim. Duis vel sagittis enim. Praesent
+        id ipsum felis. Maecenas vehicula facilisis lectus sed vulputate. Duis nec nibh id est commodo laoreet.
+    </p>
+</div>
+<br/>
+
+<!--Table of services -->
+<div class="mx-10 rounded-xl bg-white shadow-sm px-6 py-3" style="border: 2px solid #e5dcff;">
+    <!-- https://lucide.dev/icons/table-properties -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-table-properties-icon lucide-table-properties inline"><path d="M15 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M21 9H3"/><path d="M21 15H3"/></svg>
+    <h3 class="inline align-middle">Gazelle services</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Access</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="font-semibold" style="background-color: #f1f5f9">
+            <td colspan="3">Conformity services</td>
+        </tr>
+        <tr>
+            <td>CDA Validator</td>
+            <td>Validator of CDA documents.</td>
+            <td><a href="#" class="text-blue">Open application</a></td>
+        </tr>
+        <tr>
+            <td>Matchbox</td>
+            <td>Matchbox is an open source initiative to support testing and implementation of FHIR-based solutions and to map or capture health data into HL7® FHIR®.</td>
+            <td><a href="#" class="text-blue">Open application</a></td>
+        </tr>
+        <tr>
+            <td>TLS Certificate Validator</td>
+            <td>Validator for TLS certificates.</td>
+            <td><a href="#" class="text-blue">Open application</a></td>
+        </tr>
+
+        <tr class="font-semibold" style="background-color: #f1f5f9;">
+            <td colspan="3">Interoperability services</td>
+        </tr>
+        <tr>
+            <td>Simulator HL7v2</td>
+            <td>Simulator of HL7V2 messages.</td>
+            <td><a href="#" >Open application</a></td>
+        </tr>
+        <tr>
+            <td>SVS Simulator</td>
+            <td>The SVS Simulator emulates the Value Set Consumer and Value Set Repository actors defined in the IT-Infrastructure technical framework.</td>
+            <td><a href="#">Open application</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br/>
+</body>

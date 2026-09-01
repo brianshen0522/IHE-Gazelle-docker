@@ -1,0 +1,22 @@
+<settings>
+    <servers>
+        <!-- server configuration for releases -->
+        <server>
+            <id>nexus-releases</id>
+            <username>${ARTIFACT_RELEASE_REPOSITORY_USER}</username>
+            <password>${ARTIFACT_RELEASE_REPOSITORY_PASS}</password>
+        </server>
+        <!-- server configuration for snapshot publishes -->
+        <server>
+            <id>nexus-snapshots</id>
+            <username>${ARTIFACT_RELEASE_REPOSITORY_USER}</username>
+            <password>${ARTIFACT_RELEASE_REPOSITORY_PASS}</password>
+        </server>
+        <!-- server configuration for docker pushes -->
+        <server>
+            <id>rg.fr-par.scw.cloud</id>
+            <username>${CS_SVC_REGISTRY_IMAGE_USER}</username>
+            <password>${CS_SVC_REGISTRY_IMAGE_PASS}</password>
+        </server>
+    </servers>
+</settings>

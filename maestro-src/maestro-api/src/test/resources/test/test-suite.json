@@ -1,0 +1,26 @@
+{
+  "id": "suite-fixture",
+  "name": "Fixture Suite",
+  "testReferences": [
+    {
+      "testId": "fixture-test",
+      "properties": [
+        {
+          "name": "env",
+          "type": "STRING",
+          "value": "QA"
+        }
+      ]
+    }
+  ],
+  "supportedInputs": [
+    {
+      "id": "input-fixture",
+      "type": "TEXT",
+      "label": "Fixture Input",
+      "required": true,
+      "possibleValues": ["foo", "bar"],
+      "defaultValue": "foo"
+    }
+  ]
+}

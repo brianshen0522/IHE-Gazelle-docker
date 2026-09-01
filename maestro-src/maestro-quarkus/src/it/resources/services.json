@@ -1,0 +1,79 @@
+[
+  {
+    "name": "matchbox",
+    "version": "1.0.0",
+    "instanceId": "12345",
+    "replicaId": "123",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Validation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:port/matchboxv3/gazelle"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": [
+      {
+        "interfaceName": "their-interface",
+        "required": true,
+        "supportedVersions": [
+          "1.0",
+          "1.1"
+        ],
+        "supportedBindings": [
+          "REST"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Gazelle HL7 Validator (HL7v3)",
+    "version": "3.2.1",
+    "instanceId": "1a2b4d",
+    "replicaId": "5kkhf",
+    "description": "This service validates hl7v3 messages",
+    "providedInterfaces": [
+      {
+        "interfaceName": "EVS Client API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:port/evs/gazelle"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": [
+      {
+        "interfaceName": "SVS Repository API",
+        "required": true,
+        "supportedVersions": ["1.0.0", "2.0.0"],
+        "supportedBindings": ["REST"]
+      }
+    ]
+  },
+  {
+    "name": "ITB",
+    "version": "1.0.0",
+    "instanceId": "instanceId",
+    "replicaId": "replicaId",
+    "providedInterfaces": [
+      {
+        "interfaceName": "ITB API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:port"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": null
+  }
+]

@@ -1,0 +1,238 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "clientScopes": [
+    {
+      "name": "cas-client-scope",
+      "description": "Scope for Gazelle CAS clients",
+      "protocol": "cas",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      },
+      "protocolMappers": [
+        {
+          "name": "ticket_session_expiration",
+          "protocol": "cas",
+          "protocolMapper": "cas-token-expiration",
+          "consentRequired": false,
+          "config": {}
+        },
+        {
+          "name": "last name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "lastName",
+            "user.attribute": "lastName"
+          }
+        },
+        {
+          "name": "gazelle_roles",
+          "protocol": "cas",
+          "protocolMapper": "gazelle-groups-to-cas-roles-mapper",
+          "consentRequired": false,
+          "config": {}
+        },
+        {
+          "name": "first name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "firstName",
+            "user.attribute": "firstName"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "email",
+            "user.attribute": "email"
+          }
+        },
+        {
+          "name": "institution_keyword",
+          "protocol": "cas",
+          "protocolMapper": "organization-keyword-protocol-mapper",
+          "consentRequired": false,
+          "config": {}
+        }
+      ]
+    }
+  ],
+  "authenticationFlows": [
+    {
+      "alias": "gazelle-browser",
+      "description": "Gazelle custom auth flow for browser login",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-cookie",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "auth-spnego",
+          "authenticatorFlow": false,
+          "requirement": "DISABLED",
+          "priority": 25,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "identity-provider-redirector",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 26,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 31,
+          "flowAlias": "gazelle-browser Organization",
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "ALTERNATIVE",
+          "priority": 32,
+          "flowAlias": "gazelle-browser forms",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "gazelle-browser Browser - Conditional 2FA",
+      "description": "Flow to determine if any 2FA is required for the authentication",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorConfig": "gazelle-browser browser-conditional-credential",
+          "authenticator": "conditional-credential",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 30,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 40,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "webauthn-authenticator",
+          "authenticatorFlow": false,
+          "requirement": "DISABLED",
+          "priority": 50,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "auth-recovery-authn-code-form",
+          "authenticatorFlow": false,
+          "requirement": "DISABLED",
+          "priority": 51,
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "gazelle-browser Browser - Conditional Organization",
+      "description": "Flow to determine if the organization identity-first login is to be used",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "organization",
+          "authenticatorFlow": false,
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "gazelle-browser Organization",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticatorFlow": true,
+          "requirement": "CONDITIONAL",
+          "priority": 10,
+          "flowAlias": "gazelle-browser Browser - Conditional Organization",
+          "userSetupAllowed": false
+        }
+      ]
+    },
+    {
+      "alias": "gazelle-browser forms",
+      "description": "Username, password, otp and other auth forms.",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "gazelle-delegated-authenticator",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 20,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticator": "organization-validation-auth",
+          "authenticatorFlow": false,
+          "requirement": "REQUIRED",
+          "priority": 21,
+          "userSetupAllowed": false
+        },
+        {
+          "authenticatorFlow": true,
+          "requirement": "CONDITIONAL",
+          "priority": 22,
+          "flowAlias": "gazelle-browser Browser - Conditional 2FA",
+          "userSetupAllowed": false
+        }
+      ]
+    }
+  ],
+  "authenticatorConfig": [
+    {
+      "alias": "gazelle-browser browser-conditional-credential",
+      "config": {
+        "credentials": "webauthn-passwordless"
+      }
+    }
+  ]
+
+}

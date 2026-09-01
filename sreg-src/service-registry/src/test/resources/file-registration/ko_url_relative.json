@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Mock_XDS_Simulator",
+    "version": "1.0.0",
+    "instanceId": "123abc",
+    "replicaId": "001",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost/simulation-mock/rest/xds"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": null
+  },
+  {
+    "name": "KO_relative_URL",
+    "version": "1.0.0",
+    "instanceId": "234bcd",
+    "replicaId": "234",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "/simulation-mock/rest/mcsd"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": null
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "mock-validation-service",
+    "version": "1.0.0",
+    "instanceId": "mock-1",
+    "replicaId": "001",
+    "description": "Mock validation service",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Validation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:{{validatorPort}}/validator/rest"
+          }
+        ]
+      }
+    ]
+  }
+]

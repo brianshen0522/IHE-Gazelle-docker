@@ -1,0 +1,111 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "clientScopes": [
+    {
+      "name": "gazelle_microprofile_jwt",
+      "description": "Gazelle Microprofile JWT",
+      "protocol": "openid-connect",
+      "attributes": {
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "upn",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "upn",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "user.attribute": "foo",
+            "claim.name": "roles",
+            "access.token.claim": "true",
+            "id.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cas-client-scope",
+      "description": "Scope for Gazelle CAS clients",
+      "protocol": "openid-connect",
+      "protocolMappers": [
+        {
+          "name": "last name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "lastName",
+            "user.attribute": "lastName"
+          }
+        },
+        {
+          "name": "gazelle_roles",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "GAZELLE_ROLES",
+            "aggregate.attrs": "false",
+            "claim.name": "role_name",
+            "multivalued": "false"
+          }
+        },
+        {
+          "name": "first name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "firstName",
+            "user.attribute": "firstName"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "email",
+            "user.attribute": "email"
+          }
+        },
+        {
+          "name": "institution_keyword",
+          "protocol": "cas",
+          "protocolMapper": "cas-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "institution_keyword",
+            "full.path": "false"
+          }
+        },
+        {
+          "name": "ticket_session_expiration",
+          "protocol": "cas",
+          "protocolMapper": "cas-token-expiration",
+          "consentRequired": false,
+          "config": {}
+        }
+      ]
+    }
+  ]
+}

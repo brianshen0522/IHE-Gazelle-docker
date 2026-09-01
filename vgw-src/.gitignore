@@ -1,0 +1,8 @@
+*.iml
+/**/target/
+/.idea/
+/out/
+# Plugin directory
+/.quarkus/cli/plugins/
+mock
+.env

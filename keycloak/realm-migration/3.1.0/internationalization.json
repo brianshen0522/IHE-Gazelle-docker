@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "de",
+    "fi",
+    "sv",
+    "ja",
+    "en",
+    "fr",
+    "pl",
+    "zh-CN",
+    "es",
+    "it"
+  ],
+  "defaultLocale": "$(env:GZL_SSO_DEFAULT_LOCALE:-en)"
+}

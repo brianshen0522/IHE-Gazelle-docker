@@ -1,0 +1,132 @@
+<!--Default template for gazelle home page-->
+<!--This template is an example and can be customized.-->
+
+<!--@author Valentin LORAND-->
+<!--@version 1.0-->
+<!--@date October 2025-->
+<!--All rights reserved IHE-Europe 2025-->
+
+<!--Available images :-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Test-execution.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Message-capture.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Simulation-portal.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Validation-portal.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/User-management.png-->
+<!--${SCHEME}://${FQDN}/gazelle/home/illustrations/Documentation.png-->
+
+<body>
+
+<!--CSS injection -->
+<div>
+    <style>
+        /*Add you CSS customizations here*/
+        /* Table styling */
+        table {
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 100%;
+        }
+        tbody { border: 1px solid #f2f2f2; }
+
+        th {
+            background-color: #e0eaf2 !important;
+            color: #333;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td { padding: 10px;border: none; }
+        td > a { text-decoration: none !important; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+
+        /* App card styling */
+        .app-card:hover { background-color: whitesmoke; }
+        .app-card {
+            background-color: white;
+            border: 2px solid #e5dcff;
+            border-radius: 5px;
+            padding: 5px;
+            width: 380px;
+            height: 330px;
+            text-decoration: none;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</div>
+
+<!--Welcome message + Information -->
+<div class="mx-10 rounded-xl bg-white shadow-sm p-3" style="border: 2px solid #e5dcff;">
+    <div class="flex flex-row w-full">
+        <div class="basis-128 w-full">
+            <h3>Local Gazelle Test Bed</h3>
+            <p class="text-left">This is a self-hosted Gazelle deployment running entirely in Docker:
+            Test Management, User Management (Keycloak SSO), Validation portal and Simulation portal.
+            Sign in with your Gazelle account to access the applications below.</p>
+        </div>
+        <div class="basis-64">
+            <img src="${SCHEME}://${FQDN}/gazelle/assets/gz_logo.svg" alt="Gazelle logo"/>
+        </div>
+    </div>
+</div>
+<br/>
+
+<!--Grid of applications -->
+<div class="mx-10" style="display: grid; justify-content: space-evenly; align-self: center; align-items: center; flex: 0 0 15%; grid-template-columns: repeat(auto-fit, minmax(300px, auto)); gap: 2rem;">
+    <a class="app-card" href="${SCHEME}://${FQDN}/tm" title="Open application">
+        <img id="img-card-1" alt="Test Management" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Test-execution.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Test Management
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Access to test design application to create, edit tests of Gazelle</p>
+        </div>
+        <p id="link-card-1" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+    <a class="app-card" href="${SCHEME}://${FQDN}/gazelle/validation-portal/profiles" title="Open application">
+        <img id="img-card-2" alt="Validation portal" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Validation-portal.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Validation portal
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Validates your documents with validation portal service.</p>
+        </div>
+        <p id="link-card-2" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+    <a class="app-card" href="${SCHEME}://${FQDN}/gazelle/simulation-portal/sequences" title="Open application">
+        <img id="img-card-3" alt="Simulation portal" width="150" height="100" style="margin: auto;"
+             src="${SCHEME}://${FQDN}/gazelle/home/illustrations/Simulation-portal.png">
+        <h3 class="font-bold text-center" style="margin: 5px auto; color: rgb(185, 13, 128); font-size: 1.2rem;">
+            Simulation portal
+        </h3>
+        <div style="height: 4rem; color: rgb(85, 85, 85); text-overflow: ellipsis; overflow: hidden; font-size: 1rem; padding: 0 1rem;">
+            <p>Test your systems with the simulation portal service.</p>
+        </div>
+        <p id="link-card-3" class="font-bold text-center" style="color:#007bff;">
+            Open application
+        </p>
+    </a>
+</div>
+<br/>
+
+<!-- Text content -->
+<div class="mx-10 rounded-xl bg-white shadow-sm p-3" style="border: 2px solid #e5dcff;">
+    <h3 class="inline align-middle">About this deployment</h3>
+    <p>All services run locally via docker compose. Useful entry points:
+    Test Management (<a class="text-blue" href="${SCHEME}://${FQDN}/tm">/tm</a>),
+    Keycloak admin console (<a class="text-blue" href="${SCHEME}://${FQDN}/auth">/auth</a>),
+    User Management (<a class="text-blue" href="${SCHEME}://${FQDN}/gazelle/user-management/users">users &amp; organizations</a>).
+    The Simulation portal lists simulators registered in the Service Registry; the Validation portal lists
+    validation profiles from registered validation services.</p>
+</div>
+<br/>
+
+<!--Table of services -->
+<br/>
+</body>

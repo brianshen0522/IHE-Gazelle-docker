@@ -1,0 +1,18 @@
+[
+  {
+    "id": "123",
+    "type": "VALIDATION_REPORT",
+    "date": 1735755000387,
+    "content": "{\"modelVersion\":\"2.0\",\"uuid\":\"report-123\",\"dateTime\":\"2025-01-01T16:30:00.387+01:00\",\"overallResult\":\"PASSED\",\"validationMethod\":{\"validationServiceName\":\"mock-validation-service\",\"validationProfileID\":\"ITI-18_request\"},\"inputs\":[{\"id\":\"content\",\"itemId\":\"attachment-1\",\"location\":\"/attachments/attachment-1\"}],\"reports\":[],\"counters\":{}}",
+    "additionalParameters": {},
+    "references": [],
+    "accessControlList": {
+      "owners": ["gazelle"],
+      "readers": [],
+      "editors": [],
+      "public": true,
+      "isPublic": true,
+      "readAccessKey": null
+    }
+  }
+]

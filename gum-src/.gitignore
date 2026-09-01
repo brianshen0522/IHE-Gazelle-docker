@@ -1,0 +1,16 @@
+# Maven
+**/target/
+
+# Intellij Idea
+.idea/
+*.iml
+
+
+.env*
+!external-idp-mock/.env
+
+# Quarkus
+.quarkus/
+
+# Custom script
+buildAndDeploy.sh

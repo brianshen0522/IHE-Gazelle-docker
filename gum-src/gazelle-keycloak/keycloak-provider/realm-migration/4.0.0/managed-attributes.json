@@ -1,0 +1,55 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "displayName": "GAZELLE",
+  "accessTokenLifespan": 600,
+  "accessTokenLifespanForImplicitFlow": 1200,
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"attributes\":[{\"name\":\"username\",\"displayName\":\"${username}\",\"validations\":{\"length\":{\"min\":3,\"max\":255},\"username-prohibited-characters\":{},\"up-username-not-idn-homograph\":{}},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"email\",\"displayName\":\"${email}\",\"validations\":{\"email\":{},\"length\":{\"max\":255}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"firstName\",\"displayName\":\"${firstName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"lastName\",\"displayName\":\"${lastName}\",\"validations\":{\"length\":{\"max\":255},\"person-name-prohibited-characters\":{}},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false}],\"groups\":[{\"name\":\"user-metadata\",\"displayHeader\":\"User metadata\",\"displayDescription\":\"Attributes, which refer to user metadata\"}],\"unmanagedAttributePolicy\":\"ENABLED\"}"
+          ]
+        }
+      }
+    ],
+    "org.keycloak.storage.UserStorageProvider": [
+      {
+        "name": "gazelle-user-provider",
+        "providerId": "gazelle-user-provider",
+        "subComponents": {},
+        "config": {
+          "roleMapping": [
+            "admin_role=admin",
+            "user_role=user",
+            "monitor_role=monitor"
+          ],
+          "password": [
+            "$(env:DB_GUM_PASSWORD)"
+          ],
+          "validationQuery": [
+            "select 1"
+          ],
+          "jdbcUrl": [
+            "jdbc:postgresql://$(env:DB_GUM_HOST):$(env:DB_GUM_PORT)/$(env:DB_GUM_NAME)"
+          ],
+          "cachePolicy": [
+            "NO_CACHE"
+          ],
+          "priority": [
+            "0"
+          ],
+          "enabled": [
+            "true"
+          ],
+          "username": [
+            "$(env:DB_GUM_USER)"
+          ]
+        }
+      }
+    ]
+  }
+}

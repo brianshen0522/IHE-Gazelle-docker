@@ -1,0 +1,58 @@
+{
+  "name": "Simple Test Case",
+  "inputs": [
+    {
+      "key": "inputFile1",
+      "label": "Diagnostic report",
+      "format": "JSON",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "inputFile2",
+      "label": "StructureDefinition transaction-bundle",
+      "format": "JSON",
+      "type": "file",
+      "required": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "validationStep1",
+      "@type": "VALIDATION",
+      "description": "This step is the first step.",
+      "properties": [
+        {
+          "key": "validationService",
+          "value": "matchbox"
+        },
+        {
+          "key": "validationProfile",
+          "value": "https://profiles.ihe.net/RAD/IRA/StructureDefinition/diagnosticreportcontext|1.0.0"
+        },
+        {
+          "key": "contentToValidate",
+          "value": "${inputFile1}"
+        }
+      ]
+    },
+    {
+      "id": "validationStep2",
+      "@type": "VALIDATION",
+      "properties": [
+        {
+          "key": "validationService",
+          "value": "matchbox"
+        },
+        {
+          "key": "validationProfile",
+          "value": "https://hl7.org/fhir/StructureDefinition/transaction-bundle|5.0.0"
+        },
+        {
+          "key": "contentToValidate",
+          "value": "${inputFile2}"
+        }
+      ]
+    }
+  ]
+}

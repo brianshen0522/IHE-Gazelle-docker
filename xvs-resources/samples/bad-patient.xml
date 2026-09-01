@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PatientRecord version="1.0">
+  <Patient>
+    <Name>Brian Shen</Name>
+    <BirthTime>1990-01-01</BirthTime>
+    <Gender>X</Gender>
+    <Identifier>TW-123456</Identifier>
+  </Patient>
+</PatientRecord>

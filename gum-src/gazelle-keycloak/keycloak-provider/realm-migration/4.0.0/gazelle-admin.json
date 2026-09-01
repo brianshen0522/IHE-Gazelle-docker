@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "roles": {
+    "realm": [
+      {
+        "name": "role:gazelle_admin",
+        "description": "Role for gazelle administrator",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  }
+}

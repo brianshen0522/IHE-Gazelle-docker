@@ -1,0 +1,58 @@
+[
+  {
+    "test": {
+      "id": "1",
+      "name": "name1",
+      "steps": [
+        {
+          "type": "MOCK",
+          "name": "test",
+          "properties": [
+            {
+              "name": "stringProperty",
+              "value": "string",
+              "type": "WRONG"
+            }
+          ]
+        }
+      ]
+    },
+    "inputs": [
+      {
+        "name": "inputFile1",
+        "value": "ihfeorhqifrghqpervgh",
+        "type": "BYTE_ARRAY"
+      },
+      {
+        "name": "stringInput",
+        "value": "string",
+        "type": "STRING"
+      },
+      {
+        "name": "integerInput",
+        "value": "3",
+        "type": "INTEGER"
+      },
+      {
+        "name": "booleanInput",
+        "value": "true",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "doubleInput",
+        "value": "0.5",
+        "type": "FLOAT"
+      },
+      {
+        "name": "byteArrayInput",
+        "value": "ihfeorhqifrghqpervgh",
+        "type": "BYTE_ARRAY"
+      },
+      {
+        "name": "dateInput",
+        "value": "2024-11-08T11:19:36.385+00:00",
+        "type": "DATE"
+      }
+    ]
+  }
+]

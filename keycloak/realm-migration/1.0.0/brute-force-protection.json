@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "ssoSessionIdleTimeout": 2400,
+  "ssoSessionMaxLifespan": 43200,
+  "ssoSessionIdleTimeoutRememberMe": 259200,
+  "ssoSessionMaxLifespanRememberMe": 604800,
+  "clientSessionIdleTimeout": 1200,
+  "clientSessionMaxLifespan": 43200,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "quickLoginCheckMilliSeconds": 1000,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "registrationAllowed": true,
+  "rememberMe": true
+}

@@ -1,0 +1,101 @@
+# Define templates
+include:
+  - project: ${GITLAB_CI_TEMPLATES_PATH}
+    file: ${GITLAB_CI_TEMPLATES_FILE}
+    ref: 'master'
+
+
+# Define stages
+stages:
+  - prepare
+  - build
+  - test
+  - publish
+  - security
+  - release
+  - upgrade
+  - clean
+  - schedule
+  - scheduled-jobs
+
+
+# Define global variables
+variables:
+  P_MAVEN_IMAGE_TAG: "3.9.6-openjdk-21-slim"
+
+# Build and Test
+
+compile/unit-test:
+  stage: build
+  extends:
+    - .buildJavaMavenTest
+
+package:
+  stage: build
+  extends:
+    - .buildJavaMavenPackageWithQuarkus
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-Pci -DskipTests"
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+static-analysis:
+  stage: test
+  extends:
+    - .testJavaMavenSonarAnalysis
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+# Publish
+
+install-cache-repo:
+  stage: publish
+  extends:
+    - .publishJavaMavenInstall
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-Pci -DskipTests"
+  needs:
+    - job: package
+      artifacts: false
+
+publish-artifacts:
+  stage: publish
+  extends:
+    - .publishJavaMavenQuarkusDeploy
+  needs:
+    - job: package
+      artifacts: true
+
+# Security
+
+security/containerWithTrivy:
+  extends:
+    - .testSecurityContainerWithTrivy
+  variables:
+    DOCKER_IMAGE_NAME : "xml-validation-service"
+  needs: [ "publish-artifacts" ]
+
+security/SBOMForJava:
+  extends:
+    - .testSecuritySBOMForJava
+  needs: [ "security/containerWithTrivy" ]
+
+security/dependenciesWithOwaspDependencyCheck:
+  extends:
+    - .testSecurityDependenciesForJavaWithOwaspDependencyCheck
+  needs: [ "security/containerWithTrivy" ]
+
+# Release
+
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForQuarkus
+
+release/dockerImage:
+  stage: release
+  extends:
+    - .releaseDockerWithQuarkus
+  needs: [ "release/code" ]

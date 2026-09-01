@@ -1,0 +1,9 @@
+*
+!target/*-runner
+!target/*-runner.jar
+!target/lib/*
+!target/quarkus-app/*
+!src/main/docker/gazelle-run-jar.sh
+!src/main/docker/gazelle-run.sh
+!src/main/docker/schematron-validator-migration.sh
+!src/main/resources/schematron-validator-migration.sh

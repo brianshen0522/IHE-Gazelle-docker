@@ -1,0 +1,9 @@
+export const GAZELLE_ADMIN = 'role:gazelle_admin';
+export const PROJECT_ADMIN = 'role:project_admin';
+export const TESTING_SESSION_MANAGER = 'role:testing_session_manager';
+export const MONITOR = 'role:monitor';
+export const TEST_DESIGNER = 'role:test_designer';
+export const LATE_REGISTRATION = 'role:late_registration';
+export const SUT_OPERATOR = 'role:sut_operator';
+export const PREFIX_ORGANIZATION_ADMIN = 'org-adm:';
+export const PREFIX_ORGANIZATION = 'org:';

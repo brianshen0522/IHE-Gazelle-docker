@@ -1,0 +1,25 @@
+platformName: "IHE Gazelle Platform"
+legalInformationUrl: "https://www.ihe-europe.net/privacy-policy"
+cookiesPreferencesUrl: "https://gazelle.ihe-europe.net/?page_id=399"
+privacyPolicyUrl: "https://www.ihe-europe.net/privacy-policy"
+termsOfServiceUrl: "https://www.ihe-europe.net/privacy-policy"
+contactEmail: "gazellesupport@kereval.com"
+helpdeskUrl: ""
+documentationUrl: "https://${FQDN}/gazelle-documentation"
+favoriteDocUrl: "https://${FQDN}/gazelle-documentation/favorites"
+logoCustomerUrl: "https://www.kereval.com/wp-content/uploads/2021/06/Logo_Kereval_WR.png"
+logoCustomerWebsiteUrl: "https://www.kereval.com"
+menuEntries:
+  - name: "Other applications"
+    icon: "CircleEllipsis"
+    children:
+      - name: "Simulator HL7V2"
+        description: "Simulator for HL7V2 messages"
+        serviceName: "HL7V2-simulator"
+
+      - name: "FHIR Validator"
+        description: "Online FHIR Validator (matchbox)"
+
+      - name: "Test execution"
+        description: "This is the description"
+        serviceName: "Test Execution"

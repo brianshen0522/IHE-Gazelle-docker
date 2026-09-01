@@ -1,0 +1,122 @@
+[
+  {
+    "accessControlList": {
+      "owners": ["user1"]
+    },
+    "test": {
+      "id": "1",
+      "name": "name1",
+      "steps": [
+        {
+          "type": "MOCK",
+          "name": "test",
+          "properties": [
+            {
+              "name": "stringProperty",
+              "value": "string",
+              "type": "STRING"
+            },
+            {
+              "name": "integerProperty",
+              "value": "3",
+              "type": "INTEGER"
+            },
+            {
+              "name": "booleanProperty",
+              "value": "true",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "doubleProperty",
+              "value": "0.5",
+              "type": "FLOAT"
+            },
+            {
+              "name": "byteArrayProperty",
+              "value": "ihfeorhqifrghqpervgh",
+              "type": "BYTE_ARRAY"
+            },
+            {
+              "name": "dateProperty",
+              "value": "2024-11-08T11:19:36.385+00:00",
+              "type": "DATE"
+            }
+          ]
+        },
+        {
+          "type": "MOCK",
+          "name": "testRefs",
+          "properties": [
+            {
+              "name": "stringProperty",
+              "value": "${stringInput}",
+              "type": "STRING"
+            },
+            {
+              "name": "integerProperty",
+              "value": "${integerInput}",
+              "type": "INTEGER"
+            },
+            {
+              "name": "booleanProperty",
+              "value": "${booleanInput}",
+              "type": "BOOLEAN"
+            },
+            {
+              "name": "doubleProperty",
+              "value": "${doubleInput}",
+              "type": "FLOAT"
+            },
+            {
+              "name": "byteArrayProperty",
+              "value": "${byteArrayInput}",
+              "type": "BYTE_ARRAY"
+            },
+            {
+              "name": "dateProperty",
+              "value": "${dateInput}",
+              "type": "DATE"
+            }
+          ]
+        }
+      ]
+    },
+    "inputs": [
+      {
+        "name": "inputFile1",
+        "value": "ihfeorhqifrghqpervgh",
+        "type": "BYTE_ARRAY"
+      },
+      {
+        "name": "stringInput",
+        "value": "string",
+        "type": "STRING"
+      },
+      {
+        "name": "integerInput",
+        "value": "3",
+        "type": "INTEGER"
+      },
+      {
+        "name": "booleanInput",
+        "value": "true",
+        "type": "BOOLEAN"
+      },
+      {
+        "name": "doubleInput",
+        "value": "0.5",
+        "type": "FLOAT"
+      },
+      {
+        "name": "byteArrayInput",
+        "value": "ihfeorhqifrghqpervgh",
+        "type": "BYTE_ARRAY"
+      },
+      {
+        "name": "dateInput",
+        "value": "2024-11-08T11:19:36.385+00:00",
+        "type": "DATE"
+      }
+    ]
+  }
+]

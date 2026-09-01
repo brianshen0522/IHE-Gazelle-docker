@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "roles": {
+    "realm": [
+      {
+        "name": "machine",
+        "description": "Specific role used for M2M",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+INSERT INTO gum.user (id,email,firstname,lastname,activated,last_login_timestamp,organization_id,last_update_timestamp,registration_timestamp,login_counter)
+        VALUES ('paulo','paulo.cal@maildrop.com','Paulo','Cal',true,'2020-10-05 14:01:10.00','Test_Delegation','2020-10-05 14:01:10.00','1980-10-05 14:01:10.00',10);
+INSERT INTO gum.credentials (user_id,credentials,reset_password) VALUES ('paulo', CONCAT('{"password":"',MD5('pwd'),'", "hashMethod":"MD5"}'),false);
+INSERT INTO gum.user_role (user_id,role_id) VALUES    ((SELECT id FROM gum.user where id = 'paulo'), (SELECT id FROM gum.role where name ='vendor_role'));

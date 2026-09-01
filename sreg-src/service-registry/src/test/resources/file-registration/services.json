@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Mock_XDS_Simulator",
+    "version": "1.0.0",
+    "instanceId": "123abc",
+    "replicaId": "001",
+    "description": "Mock of an XDS simulator",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:8800/simulation-mock/rest/xds"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": [
+      {
+        "interfaceName": "Validation Service API",
+        "required": true,
+        "supportedVersions": ["1.0.0"],
+        "supportedBindings": ["REST"]
+      },
+      {
+        "interfaceName": "SVS Repository API",
+        "required": false,
+        "supportedVersions": ["1.0.0", "2.0.0"],
+        "supportedBindings": ["HTTP_SOAP"]
+      }
+    ]
+  },
+  {
+    "name": "Mock_MHD_Simulator",
+    "version": "1.0.0",
+    "instanceId": "234bcd",
+    "replicaId": "234",
+    "description": "Mock of an MHD simulator",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:8800/simulation-mock/rest/mhd"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Mock_MCSD_Simulator",
+    "version": "1.0.0",
+    "instanceId": "345cde",
+    "replicaId": "a10",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:8800/simulation-mock/rest/mcsd"
+          }
+        ]
+      }
+    ]
+  }
+]

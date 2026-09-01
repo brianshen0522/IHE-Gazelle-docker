@@ -1,0 +1,67 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "clientScopes": [
+    {
+      "name": "cas-client-scope",
+      "description": "Scope for Gazelle CAS clients",
+      "protocol": "cas",
+      "protocolMappers": [
+        {
+          "name": "last name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "lastName",
+            "user.attribute": "lastName"
+          }
+        },
+        {
+          "name": "gazelle_roles",
+          "protocol": "cas",
+          "protocolMapper": "gazelle-groups-to-cas-roles-mapper",
+          "consentRequired": false,
+          "config": {}
+        },
+        {
+          "name": "first name",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "firstName",
+            "user.attribute": "firstName"
+          }
+        },
+        {
+          "name": "email",
+          "protocol": "cas",
+          "protocolMapper": "cas-usermodel-property-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "email",
+            "user.attribute": "email"
+          }
+        },
+        {
+          "name": "institution_keyword",
+          "protocol": "cas",
+          "protocolMapper": "cas-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "institution_keyword",
+            "full.path": "false"
+          }
+        },
+        {
+          "name": "ticket_session_expiration",
+          "protocol": "cas",
+          "protocolMapper": "cas-token-expiration",
+          "consentRequired": false,
+          "config": {}
+        }
+      ]
+    }
+  ]
+}

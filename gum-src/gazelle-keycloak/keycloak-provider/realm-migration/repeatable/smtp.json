@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "smtpServer": {
+    "password": "$(env:SMTP_PASSWORD)",
+    "starttls": "",
+    "auth": "true",
+    "envelopeFrom": "indus@kereval.com",
+    "port": "$(env:SMTP_PORT)",
+    "host": "$(env:SMTP_HOST)",
+    "from": "no-reply@$(env:SMTP_FROM_DOMAIN:-$(env:FQDN))",
+    "ssl": "",
+    "user": "$(env:SMTP_USERNAME)"
+  }
+}

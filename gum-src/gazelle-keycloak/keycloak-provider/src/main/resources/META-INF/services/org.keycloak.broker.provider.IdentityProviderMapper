@@ -1,0 +1,4 @@
+net.ihe.gazelle.keycloak.provider.interlay.mapper.ClaimToGroupMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.ClaimToEmailMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.ClaimToRoleMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.ClaimToRoleDependingOfOrganizationMapper

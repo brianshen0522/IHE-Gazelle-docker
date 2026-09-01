@@ -1,0 +1,18 @@
+{
+  "uuid": "report-1",
+  "result": "PASSED",
+  "testRunReports": [
+    {
+      "runId": "run-1",
+      "result": "PASSED",
+      "stepRunReports": [
+        {
+          "stepName": "Validation",
+          "type": "VALIDATION",
+          "result": "PASSED",
+          "outputs": []
+        }
+      ]
+    }
+  ]
+}

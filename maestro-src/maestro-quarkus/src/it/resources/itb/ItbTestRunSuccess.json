@@ -1,0 +1,50 @@
+{
+  "testSuiteName": "ITB Test Suite",
+  "testSetRunId": "testRun1",
+  "accessControlList": {
+    "owners": [
+      "gazelle"
+    ],
+    "public": true,
+    "isPublic": true
+  },
+  "testRuns": [
+    {
+      "testSetId": "itb-test-set-success",
+      "test": {
+        "id": "itb-test-success",
+        "name": "ITB Test Success",
+        "steps": [
+          {
+            "type": "ITB",
+            "name": "Execute ITB Test",
+            "properties": [
+              {
+                "name": "testCase",
+                "value": "test-case-1",
+                "type": "string"
+              },
+              {
+                "name": "systemID",
+                "value": "system-123",
+                "type": "string"
+              },
+              {
+                "name": "actorID",
+                "value": "actor-456",
+                "type": "string"
+              },
+              {
+                "name": "inputParam1",
+                "value": "test-value-1",
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "inputs": []
+    }
+  ]
+}
+

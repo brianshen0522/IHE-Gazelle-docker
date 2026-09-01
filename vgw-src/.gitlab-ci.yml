@@ -1,0 +1,100 @@
+# Define templates
+include:
+  - project: ${GITLAB_CI_TEMPLATES_PATH}
+    file: ${GITLAB_CI_TEMPLATES_FILE}
+    ref: 'master'
+
+
+# Define stages
+stages:
+  - build
+  - predeploy
+  - deploy
+  - test
+  - publish
+  - release
+  - upgrade
+  - cleanup
+
+# Define global variables
+variables:
+  P_MAVEN_IMAGE_TAG: "3.9.6-openjdk-21-slim"
+
+compile/unit-test:
+  stage: build
+  extends:
+    - .buildJavaMavenTest
+
+package:
+  stage: build
+  extends:
+    - .buildJavaMavenPackage
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipTests"
+
+static-analysis:
+  stage: test
+  extends:
+    - .testJavaMavenSonarAnalysis
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipTests"
+
+integration-tests:
+  stage: test
+  extends:
+    - .testJavaMavenIntegrationTestsWithDocker
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+    - job: package
+      artifacts: true
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-Dtest.log.level=WARN -DskipUnitTests"
+  script:
+    - docker login -u $CS_SVC_REGISTRY_IMAGE_USER -p $CS_SVC_REGISTRY_IMAGE_PASS $CS_SVC_REGISTRY_IMAGE_URL
+    - !reference [.maven, script]
+
+
+install-cache-repo:
+  stage: publish
+  extends:
+    - .publishJavaMavenInstall
+  needs:
+    - job: package
+      artifacts: true
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipTests"
+
+publish-artifacts:
+  stage: publish
+  extends:
+    - .publishJavaMavenQuarkusDeploy
+  needs:
+    - job: package
+      artifacts: true
+
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForJava
+
+release/docker:
+  stage: release
+  extends:
+    - .releaseDockerWithQuarkus
+  needs: ["release/code"]
+
+release/documentation:
+  stage: release
+  extends:
+    - .releaseDocumentation
+  variables:
+    USER_DOCUMENTATION_APP_NAME: "Validation-Gateway"
+    JIRA_COMPONENT_NAME: "validation-gateway"
+  needs: [ "release/code" ]

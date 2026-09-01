@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@config/*": ["./src/shared/config/*"],
+      "@hooks/*": ["./src/shared/hooks/*"],
+      "@auth/*": ["./src/shared/components/auth/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@home/*": ["./src/app/home/*"],
+      "@user-management/*": ["./src/app/user-management/*"],
+      "@test-execution/*": ["./src/app/test-execution/*"],
+      "@message-capture/*": ["./src/app/message-capture/*"],
+      "@simulation-portal/*": ["./src/app/simulation-portal/*"],
+      "@validation-portal/*": ["./src/app/validation-portal/*"],
+      "@message-capture/connections/*": ["./src/app/message-capture/components/proxy/connections/*"],
+      "@message-capture/messages/*": ["./src/app/message-capture/components/proxy/messages/*"],
+      "@message-capture/multiparts/*": ["./src/app/message-capture/components/proxy/messages/multiparts/*"],
+      "@message-capture/parsers/*": ["./src/app/message-capture/components/proxy/parsers/*"],
+      "@message-capture/proxy/*": ["./src/app/message-capture/components/proxy/*"],
+      "@message-capture/renderers/*": ["./src/app/message-capture/components/proxy/renderers/*"],
+      "@message-capture/validation/*": ["./src/app/message-capture/components/proxy/validation/*"],
+      "@maestro/*": ["./src/shared/services/maestro/*"],
+      "@/public/*": ["./public/*"],
+      "@shared/assets/*": ["./src/shared/assets/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./src/shared/components/auth/authOptions.ts",
+    "src/shared/components/auth/types.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

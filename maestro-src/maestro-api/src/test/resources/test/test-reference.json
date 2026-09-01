@@ -1,0 +1,15 @@
+{
+  "testId": "fixture-reference",
+  "properties": [
+    {
+      "name": "endpoint",
+      "type": "STRING",
+      "value": "https://fixture.example"
+    },
+    {
+      "name": "retries",
+      "type": "INTEGER",
+      "value": 2
+    }
+  ]
+}

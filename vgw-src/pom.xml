@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2025 IHE International.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.ihe.gazelle</groupId>
+        <artifactId>factory-bom-jdk21-quarkus-3-27</artifactId>
+        <version>1.1.0</version>
+    </parent>
+    <artifactId>validation-gateway</artifactId>
+    <version>1.0.2</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>validation-gateway-engine</module>
+        <module>validation-gateway-jaxrs</module>
+        <module>validation-gateway-evs</module>
+        <module>validation-gateway-app</module>
+        <module>validation-gateway-migration</module>
+    </modules>
+
+    <scm>
+        <connection>scm:git:${git.project.url}</connection>
+        <developerConnection>scm:git:${git.project.url}</developerConnection>
+        <url>https://gitlab.inria.fr/gazelle/public/core/validation-gateway</url>
+        <tag>1.0.2</tag>
+    </scm>
+
+    <properties>
+        <git.project.url>https://${git.user.name}:${git.user.token}@gitlab.inria.fr/gazelle/public/core/validation-gateway.git</git.project.url>
+        <quarkus.container-image.build>false</quarkus.container-image.build>
+        <quarkus.container-image.group>gazelle-snapshot</quarkus.container-image.group>
+        <quarkus.container-image.name>app/validation-gateway</quarkus.container-image.name>
+        <quarkus.container-image.registry>rg.fr-par.scw.cloud</quarkus.container-image.registry>
+        <quarkus.container-image.tag>${project.version}</quarkus.container-image.tag>
+        <framework.version>4.0.1</framework.version>
+        <service-registry.version>2.0.1</service-registry.version>
+        <validation.api.version>2.1.0</validation.api.version>
+        <lang.version>2.0.1</lang.version>
+        <maestro.version>1.2.0</maestro.version>
+        <equalsverifier.version>4.0.7</equalsverifier.version>
+        <wiremock.version>3.13.1</wiremock.version>
+        <skipTests>false</skipTests>
+        <skipITs>${skipTests}</skipITs>
+        <skipUnitTests>${skipTests}</skipUnitTests>
+        <validation.clients.version>1.0.1</validation.clients.version>
+        <datahouse.version>4.3.0</datahouse.version>
+        <testcontainers.image.maestro>rg.fr-par.scw.cloud/gazelle/app/maestro:${maestro.version}</testcontainers.image.maestro>
+        <testcontainers.image.datahouse>rg.fr-par.scw.cloud/gazelle/app/datahouse:${datahouse.version}</testcontainers.image.datahouse>
+        <testcontainers.image.service-registry>rg.fr-par.scw.cloud/gazelle/app/service-registry:${service-registry.version}</testcontainers.image.service-registry>
+        <testcontainers.image.mongo>mongo:6.0</testcontainers.image.mongo>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Quarkus platform is declared in the bom factory but will be overridden by the Quarkus version from
+            libraries using previous Quarkus version.So to avoid conflict we redeclare it here. It will be removed when
+            the Quarkus version of all libraries is updated-->
+            <dependency>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>framework</artifactId>
+                <version>${framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>validation-service-api</artifactId>
+                <version>${validation.api.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-parent</artifactId>
+                <version>${service-registry.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>lang</artifactId>
+                <version>${lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>model-based-client</artifactId>
+                <version>${validation.clients.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-api</artifactId>
+                <version>${maestro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-client</artifactId>
+                <version>${maestro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>certificate-client</artifactId>
+                <version>${validation.clients.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>itb-client</artifactId>
+                <version>${validation.clients.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-client</artifactId>
+                <version>${service-registry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-metadata-api</artifactId>
+                <version>${framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-metadata-jaxrs-api</artifactId>
+                <version>${framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-api</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-jaxrs-api</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-microprofile-rest-client</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-index-registration-client</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <!-- These exclusions are needed because Jacoco has instrumentation errors otherwise -->
+                    <excludes>
+                        <exclude>org/dcm4che3/**/*</exclude>
+                        <exclude>com/pixelmed/**/*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>IHE</id>
+            <name>IHE Public Maven Repository Group</name>
+            <url>https://nexus.ihe-catalyst.net/repository/maven-public</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>IHE-plugins</id>
+            <name>IHE Plugins Public Maven Repository Group</name>
+            <url>https://nexus.ihe-catalyst.net/repository/maven-public/</url>
+            <layout>default</layout>
+            <releases>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <contributors>
+        <contributor>
+            <organization>IHE Catalyst</organization>
+            <organizationUrl>https://ihe-catalyst.net</organizationUrl>
+        </contributor>
+        <contributor>
+            <organization>Kereval</organization>
+            <organizationUrl>https://www.kereval.com</organizationUrl>
+        </contributor>
+    </contributors>
+
+    <profiles>
+        <profile>
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
+            <properties>
+                <skipITs>${skipITs}</skipITs>
+                <quarkus.native.enabled>true</quarkus.native.enabled>
+            </properties>
+        </profile>
+    </profiles>
+</project>

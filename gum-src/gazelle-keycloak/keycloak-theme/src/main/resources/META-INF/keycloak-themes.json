@@ -1,0 +1,19 @@
+{
+  "themes": [
+    {
+      "name": "gazelle",
+      "types": [
+        "admin",
+        "login",
+        "email",
+        "welcome"
+      ]
+    },
+    {
+      "name": "gazelle-admin",
+      "types": [
+        "login"
+      ]
+    }
+  ]
+}

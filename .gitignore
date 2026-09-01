@@ -1,0 +1,25 @@
+# ---- Secrets and local state (never committed) ----
+/.env
+/backup/
+# Test self-signed certificates incl. private keys; regenerate per docs/03-configuration.md
+/mailpit/certs/
+
+# ---- Build outputs (reproducible) ----
+**/target/
+**/node_modules/
+**/.next/
+**/.quinoa/
+*.log
+
+# ---- Editors / OS ----
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+
+# ---- Large binaries (NOT in git — downloaded separately) ----
+# downloads/ (~480MB) and the keycloak-config-cli jar are distributed as a
+# single tarball via Google Drive; see docs/02-installation.md for the link.
+# Extract it at the repo root and these paths are populated.
+/downloads/
+/keycloak/keycloak-config-cli-26.5.5.jar

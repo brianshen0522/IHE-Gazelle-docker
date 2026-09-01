@@ -1,0 +1,27 @@
+{
+  "test": {
+    "id": "1",
+    "name": "name1",
+    "steps": [
+      {
+        "name": "step1",
+        "type": "USER_INTERACTION",
+        "properties": [
+          {
+            "name": "interactionTitle",
+            "value": "title",
+            "type": "STRING"
+          },
+          {
+            "name": "message",
+            "value": "message",
+            "type": "STRING"
+          }
+        ]
+      }
+    ]
+  },
+  "accessControlList": {
+    "isPublic": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "components": {
+    "org.keycloak.storage.UserStorageProvider": [
+      {
+        "name": "gazelle-user-provider",
+        "providerId": "gazelle-user-provider",
+        "subComponents": {},
+        "config": {
+          "roleMapping": [
+            "admin_role=admin",
+            "user_role=user",
+            "monitor_role=monitor"
+          ],
+          "password": [
+            "$(env:DB_GUM_PASSWORD)"
+          ],
+          "validationQuery": [
+            "select 1"
+          ],
+          "jdbcUrl": [
+            "jdbc:postgresql://$(env:DB_GUM_HOST):$(env:DB_GUM_PORT)/$(env:DB_GUM_NAME)"
+          ],
+          "cachePolicy": [
+            "NO_CACHE"
+          ],
+          "priority": [
+            "0"
+          ],
+          "enabled": [
+            "true"
+          ],
+          "username": [
+            "$(env:DB_GUM_USER)"
+          ]
+        }
+      }
+    ]
+  }
+}

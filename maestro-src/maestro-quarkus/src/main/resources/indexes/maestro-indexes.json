@@ -1,0 +1,508 @@
+[
+  {
+    "logicalName": "validation_overall_result",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.overallResult",
+    "keys": {
+      "content.overallResult": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_service_name",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationServiceName",
+    "keys": {
+      "content.validationMethod.validationServiceName": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_service_version",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationServiceVersion",
+    "keys": {
+      "content.validationMethod.validationServiceVersion": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_profile_id",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationProfileID",
+    "keys": {
+      "content.validationMethod.validationProfileID": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_profile_name",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationProfileName",
+    "keys": {
+      "content.validationMethod.validationProfileName": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_profile_version",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationProfileVersion",
+    "keys": {
+      "content.validationMethod.validationProfileVersion": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_date_time",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "DATE_STRING",
+    "fullName": "content.dateTime",
+    "keys": {
+      "content.dateTime": -1,
+      "type": 1
+    }
+  },
+  {
+    "logicalName": "1",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfAssertions",
+    "keys": {
+      "content.counters.numberOfAssertions": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_failed_with_infos",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfFailedWithInfos",
+    "keys": {
+      "content.counters.numberOfFailedWithInfos": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_failed_with_warnings",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfFailedWithWarnings",
+    "keys": {
+      "content.counters.numberOfFailedWithWarnings": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_failed_with_errors",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfFailedWithErrors",
+    "keys": {
+      "content.counters.numberOfFailedWithErrors": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_unexpected_errors",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfUnexpectedErrors",
+    "keys": {
+      "content.counters.numberOfUnexpectedErrors": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "validation_undefined_assertions",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.counters.numberOfUndefined",
+    "keys": {
+      "content.counters.numberOfUndefined": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_result",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.result",
+    "keys": {
+      "content.result": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_suite_name",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testSuiteName",
+    "keys": {
+      "content.testSuiteName": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_service_name",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testService.serviceIdentification.name",
+    "keys": {
+      "content.testService.serviceIdentification.name": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_service_version",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testService.serviceIdentification.version",
+    "keys": {
+      "content.testService.serviceIdentification.version": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_step_name",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.stepRunReports.stepName",
+    "keys": {
+      "content.testRunReports.stepRunReports.stepName": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_step_type",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.stepRunReports.type",
+    "keys": {
+      "content.testRunReports.stepRunReports.type": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_step_result",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.stepRunReports.result",
+    "keys": {
+      "content.testRunReports.stepRunReports.result": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_date_time",
+    "itemType": "TEST_REPORT",
+    "fieldType": "DATE_STRING",
+    "fullName": "content.dateTime",
+    "keys": {
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_test_name",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.test.name",
+    "keys": {
+      "content.testRunReports.test.name": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_test_version",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.test.version",
+    "keys": {
+      "content.testRunReports.test.version": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_test_session",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.testRunReports.runId",
+    "keys": {
+      "content.testRunReports.runId": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_system_under_test",
+    "itemType": "TEST_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.systemsUnderTest.systemIdentification.name",
+    "keys": {
+      "content.systemsUnderTest.systemIdentification.name": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "test_report_total_tests",
+    "itemType": "TEST_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.testCounters.total",
+    "keys": {
+      "content.testCounters.total": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_passed_tests",
+    "itemType": "TEST_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.testCounters.passed",
+    "keys": {
+      "content.testCounters.passed": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_failed_tests",
+    "itemType": "TEST_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.testCounters.failed",
+    "keys": {
+      "content.testCounters.failed": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_undefined_tests",
+    "itemType": "TEST_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.testCounters.undefined",
+    "keys": {
+      "content.testCounters.undefined": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "test_report_unexpected_errors",
+    "itemType": "TEST_REPORT",
+    "fieldType": "INTEGER",
+    "fullName": "content.testCounters.unexpectedErrors",
+    "keys": {
+      "content.testCounters.unexpectedErrors": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_result",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.result",
+    "keys": {
+      "type": 1,
+      "content.result": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_service_name",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.serviceName",
+    "keys": {
+      "content.serviceName": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_service_version",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.serviceVersion",
+    "keys": {
+      "content.serviceVersion": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_sequence_id",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.sequenceId",
+    "keys": {
+      "content.sequenceId": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_date_time",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "DATE_STRING",
+    "fullName": "content.dateTime",
+    "keys": {
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1,
+      "accessControlListMongo.entries.role": 1,
+      "accessControlListMongo.entries.user": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_transaction_name",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.transactionReports.transaction",
+    "keys": {
+      "content.transactionReports.transaction": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_transaction_result",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.transactionReports.result",
+    "keys": {
+      "content.transactionReports.result": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  },
+  {
+    "logicalName": "simulation_report_transaction_standard",
+    "itemType": "SIMULATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "content.transactionReports.standards",
+    "keys": {
+      "content.transactionReports.standards": 1,
+      "type": 1,
+      "content.dateTime": -1,
+      "accessControlListMongo.public": 1
+    }
+  }
+]

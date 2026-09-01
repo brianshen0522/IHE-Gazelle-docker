@@ -1,0 +1,151 @@
+# Define templates
+include:
+  - project: "${GITLAB_CI_TEMPLATES_PATH}"
+    file: "${GITLAB_CI_TEMPLATES_FILE}"
+    ref: "master"
+
+stages:
+  - prepare
+  - test
+  - build
+  - publish
+  - security
+  - release
+  - upgrade
+  - clean
+  - schedule
+  - scheduled-jobs
+
+# Cache pnpm dependencies
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - node_modules/
+    - .pnpm-store/
+
+# Define variables
+variables:
+  APP_NAME: "gazelle-user-interface"
+
+# Default image used for jobs
+default:
+  image: "rg.fr-par.scw.cloud/tools/next-js:15.3.1"
+
+# ESLint check
+eslintCheck:
+  extends:
+    - .test
+  script:
+    - pnpm install
+    - pnpm lint
+  allow_failure: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+
+# Unit tests with Vitest
+unitTest:
+  extends:
+    - .test
+  script:
+    - pnpm install --frozen-lockfile
+    - pnpm test:coverage
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    paths:
+      - coverage/
+    when: always
+    expire_in: 1 week
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+
+# SonarQube Static Analysis
+sonarqubeStaticAnalysis:
+  extends:
+    - .test
+  image: sonarsource/sonar-scanner-cli
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    SONAR_TOKEN: "${CS_CODE_QUALITY_TOKEN}"
+    SONAR_HOST_URL: "${CG_SVC_CODE_QUALITY_URL}"
+    SONAR_PROJECT_KEY: "${APP_NAME}"
+  script:
+    - APP_VERSION="$(node -p "require('./package.json').version")"
+    - sonar-scanner -Dsonar.projectKey="${SONAR_PROJECT_KEY}" -Dsonar.qualitygate.wait=true -Dsonar.projectVersion="${APP_VERSION}" -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info -Dsonar.coverage.exclusions="**/*.test.ts,**/*.test.tsx,**/__tests__/**,**/setupTests.ts" -Dsonar.cpd.exclusions="**/*.test.ts,**/*.test.tsx,**/__tests__/**,**/setupTests.ts"
+  needs:
+    - job: unitTest
+      artifacts: true
+  allow_failure: true
+
+# Build the app
+buildApp:
+  stage: build
+  extends:
+    - .buildNextJs
+  needs:
+    - job: eslintCheck
+      artifacts: false
+    - job: unitTest
+      artifacts: false
+
+# Build and Publish Docker Image
+buildAndPublishDockerImage:
+  stage: build
+  extends:
+    - .buildAndPublishDockerImageForNextJsProject
+  needs:
+    - job: buildApp
+      artifacts: false
+
+# Publish Code
+publishCode:
+  stage: publish
+  extends:
+    - .publishCodeForNextJs
+  needs:
+    - job: buildApp
+
+# Security scan
+security/containerWithTrivy:
+  extends:
+    - .testSecurityContainerWithTrivy
+  variables:
+    DOCKER_IMAGE_NAME: "gazelle-user-interface"
+  needs: ["buildAndPublishDockerImage"]
+
+security/SBOMForNPM:
+  extends:
+    - .testSecuritySBOMForNPM
+  needs: ["security/containerWithTrivy"]
+
+# Release code
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForNextJs
+  variables:
+    PUBLISH_ARTEFACT_TO_NEXUS: "true"
+
+# Release Docker Image
+release/dockerImage:
+  stage: release
+  extends:
+    - .releaseDockerImageWithKanikoForNextJsProject
+  needs: ["release/code"]
+
+# Release Documentation
+release/documentation:
+  stage: release
+  extends:
+    - .releaseDocumentation
+  variables:
+    USER_DOCUMENTATION_APP_NAME: "User-Interface"
+    JIRA_COMPONENT_NAME: "user-interface"
+  needs: ["release/code"]

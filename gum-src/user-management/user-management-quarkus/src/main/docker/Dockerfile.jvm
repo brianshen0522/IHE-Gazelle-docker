@@ -1,0 +1,53 @@
+# Copyright © 2024 KEREVAL SAS . All rights reserved.
+#
+# This object, including its structure, its organization, its documentation is the property of KEREVAL SAS . All rights reserved.
+#
+# Permission is granted to use this file solely within the recipient organization for internal purposes only.
+# Any modification, redistribution, or use for commercial purposes without explicit written permission
+# from KEREVAL SAS is strictly prohibited.
+#
+# No part of this material may be reproduced, distributed, or transmitted in any form, by any means, electronic or mechanical, including recording or other
+# information storage and retrieval systems without the prior written authorization of KEREVAL SAS and may result in civil and/or criminal penalties.
+#
+# For permission requests, please contact: contact@kereval.com
+#
+# Internal Use Only
+
+FROM rg.fr-par.scw.cloud/tools/quarkus:3.33
+
+ENV LANGUAGE='en_US:en'
+
+HEALTHCHECK --interval=5s --timeout=5s --start-period=25s --retries=5 CMD curl -f "http://127.0.0.1:${QUARKUS_HTTP_PORT:-8080}/gum/health" || exit 1
+
+USER root
+
+# Install required packages
+RUN microdnf update -y && microdnf install -y wget libicu && microdnf clean all
+
+# Install postgresql client
+ADD https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm  /tmp/pg_repo.rpm
+
+RUN rpm -i /tmp/pg_repo.rpm && \
+    microdnf install -y systemd postgresql14-libs postgresql14 lz4
+
+ENV PATH="/usr/pgsql-14/bin:${PATH}"
+
+# We make four distinct layers so if there are application changes the library layers can be re-used
+COPY target/quarkus-app/lib/ /deployments/lib/
+COPY target/quarkus-app/*.jar /deployments/
+COPY target/quarkus-app/app/ /deployments/app/
+COPY target/quarkus-app/quarkus/ /deployments/quarkus/
+
+RUN chmod -R 755 /deployments
+
+COPY src/main/docker/gazelle-run.sh /gazelle-run.sh
+RUN chmod 755 /gazelle-run.sh
+
+EXPOSE 8080
+USER 185
+ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+
+
+
+ENTRYPOINT [ "/gazelle-run.sh" ]

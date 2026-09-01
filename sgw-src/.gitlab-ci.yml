@@ -1,0 +1,94 @@
+# Define templates
+include:
+  - project: "${GITLAB_CI_TEMPLATES_PATH}"
+    file: "${GITLAB_CI_TEMPLATES_FILE}"
+    ref: "master"
+
+# Define stages
+stages:
+  - build
+  - predeploy
+  - deploy
+  - test
+  - publish
+  - release
+  - upgrade
+  - clean
+
+# Define global variables
+variables:
+  P_NAME: "simulation-gateway"
+  P_APP_TYPE: "java"
+  P_CODE_SRC_PATH: "."
+  P_MAVEN_IMAGE_TAG: "3.9.6-openjdk-21-slim"
+  SERVICE_PATH: "simulation-gateway"
+
+# Define jobs
+compile/unit-test:
+  stage: build
+  extends:
+    - .buildJavaMavenTest
+
+package:
+  stage: build
+  extends:
+    - .buildJavaMavenPackageWithQuarkus
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+integration-tests:
+  stage: test
+  extends:
+    - .testJavaMavenIntegrationTestsWithDocker
+
+static-analysis:
+  stage: test
+  extends:
+    - .testJavaMavenSonarAnalysis
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+install-cache-repo:
+  stage: publish
+  extends:
+    - .publishJavaMavenInstall
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+    - job: package
+      artifacts: true
+    - job: integration-tests
+      artifacts: false
+
+publish-artifacts:
+  stage: publish
+  extends:
+    - .publishJavaMavenDeploy
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+    - job: package
+      artifacts: true
+    - job: integration-tests
+      artifacts: false
+    - job: static-analysis
+      artifacts: false
+
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForQuarkus
+  when: manual
+  variables:
+    P_MAVEN_JAVADOC_SKIP: "true"
+
+# Release simulation-gateway docker image
+release/docker:
+  stage: release
+  extends:
+    - .releaseDockerWithQuarkus
+  variables:
+    DOCKER_IMAGE_NAME : "simulation-gateway"
+  needs: [ "release/code" ]

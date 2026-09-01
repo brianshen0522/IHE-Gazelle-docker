@@ -1,0 +1,51 @@
+[
+  {
+    "profileID": "ITI-18_request",
+    "profileName": "ITI-18 Registry Stored Query Request",
+    "coveredItems": [
+      "ITI-18 request A",
+      "ITI-18 request B"
+    ],
+    "domain": "ITI"
+  },
+  {
+    "profileID": "ITI-18_response",
+    "profileName": "ITI-18 Registry Stored Query Response",
+    "coveredItems": [
+      "ITI-18 response"
+    ],
+    "domain": "ITI"
+  },
+  {
+    "profileID": "ITI-43_request",
+    "profileName": "ITI-43 Retrieve Document Set Request",
+    "coveredItems": [
+      "ITI-43 request"
+    ],
+    "domain": "ITI"
+  },
+  {
+    "profileID": "ITI-43_response",
+    "profileName": "ITI-43 Retrieve Document Set Response",
+    "coveredItems": [
+      "ITI-43 response"
+    ],
+    "domain": "ITI"
+  },
+  {
+    "profileID": "RAD-69_request",
+    "profileName": "RAD-69 Imaging Document Set Request",
+    "coveredItems": [
+      "RAD-69 request"
+    ],
+    "domain": "RAD"
+  },
+  {
+    "profileID": "RAD-69_response",
+    "profileName": "RAD-69 Imaging Document Set Response",
+    "coveredItems": [
+      "RAD-69 response"
+    ],
+    "domain": "RAD"
+  }
+]

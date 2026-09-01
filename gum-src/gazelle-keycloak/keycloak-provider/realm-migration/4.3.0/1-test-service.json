@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "roles": {
+    "realm": [
+      {
+        "name": "role:test_service",
+        "description": "Role for third party applications",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  }
+}

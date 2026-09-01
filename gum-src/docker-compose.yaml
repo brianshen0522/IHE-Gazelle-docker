@@ -1,0 +1,74 @@
+# Copyright © 2024 KEREVAL SAS . All rights reserved.
+#
+# This object, including its structure, its organization, its documentation is the property of KEREVAL SAS . All rights reserved.
+#
+# Permission is granted to use this file solely within the recipient organization for internal purposes only.
+# Any modification, redistribution, or use for commercial purposes without explicit written permission
+# from KEREVAL SAS is strictly prohibited.
+#
+# No part of this material may be reproduced, distributed, or transmitted in any form, by any means, electronic or mechanical, including recording or other
+# information storage and retrieval systems without the prior written authorization of KEREVAL SAS and may result in civil and/or criminal penalties.
+#
+# For permission requests, please contact: contact@kereval.com
+#
+# Internal Use Only
+
+services:
+  gazelle-database:
+    container_name: gazelle-database
+    image: rg.fr-par.scw.cloud/gazelle/app/gazelle-database:17.0.0
+    network_mode: "host"
+    restart: always
+    env_file:
+      - .env.local
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/var/lib/postgresql/17/data/:/var/lib/postgresql/data/"
+    mem_reservation: ${DB_MEM_RESERVATION:-512m}
+    mem_limit: ${DB_MEM_LIMIT:-2048m}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-U", "${POSTGRES_DB}" ]
+      interval: ${HEALTHCHECK_INTERVAL}
+      timeout: ${HEALTHCHECK_TIMEOUT}
+      retries: ${HEALTHCHECK_RETRIES}
+      start_period: ${HEALTHCHECK_START_PERIOD}
+
+  gazelle-user-management-keycloak:
+    container_name: gazelle-user-management-keycloak
+    image: rg.fr-par.scw.cloud/gazelle-snapshot/app/gazelle-user-management-keycloak:${APP_VERSION}
+    network_mode: "host"
+    restart: always
+    env_file:
+      - .env.local
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/opt/app-version:/opt/app-version:rw"
+    mem_reservation: ${KEYCLOAK_MEM_RESERVATION:-512m}
+    mem_limit: ${KEYCLOAK_MEM_LIMIT:-1024m}
+    depends_on:
+      gazelle-database :
+        condition: service_healthy
+
+  gazelle-user-management-quarkus:
+    container_name: gazelle-user-management-quarkus
+    image: rg.fr-par.scw.cloud/gazelle-snapshot/app/gazelle-user-management-quarkus:${APP_VERSION}
+    network_mode: "host"
+    restart: always
+    env_file:
+      - user-management/user-management-quarkus/.env.local
+    depends_on:
+      gazelle-database :
+        condition: service_healthy
+      gazelle-user-management-keycloak:
+        condition: service_healthy
+    mem_reservation: ${QUARKUS_MEM_RESERVATION:-512m}
+    mem_limit: ${QUARKUS_MEM_LIMIT:-512m}
+#  mailhog:
+#    container_name: mailhog
+#    image: mailhog/mailhog
+#    ports:
+#      - "8025:8025"
+#      - "1025:1025"
+#    restart: always

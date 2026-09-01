@@ -1,0 +1,19 @@
+{
+  "profileID": "profile1",
+  "profileName": "Profile 1",
+  "domain": "Domain1",
+  "xsdPath": "profiles/domain1/schema.xsd",
+  "schematronPath": "profiles/domain1/profile1/valid01.sch",
+  "xsltPath": "cache/profile1.xslt",
+  "cacheEnabled": false,
+  "schematronVersion": "1.0",
+  "xsdVersion": "1.0",
+  "xsdStandards": [
+    "iti"
+  ],
+  "schematronStandards": [
+      "iji"
+  ]
+
+
+}

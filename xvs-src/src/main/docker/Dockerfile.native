@@ -1,0 +1,51 @@
+####
+# This Dockerfile is used in order to build a container that runs the Quarkus application in native (no JVM) mode.
+#
+# Before building the container image run:
+#
+# ./mvnw package -Pnative
+#
+# Then, build the image with:
+#
+# docker build -f src/main/docker/Dockerfile.native -t quarkus/phschematron-validation-service .
+#
+# Then run the container using:
+#
+# docker run -i --rm -p 8080:8080 quarkus/phschematron-validation-service
+#
+###
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.6
+
+# Workdir for the native binary
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root target/*-runner /work/application
+
+USER root
+# Prepare startup scripts + install PostgreSQL client (single layer, readable)
+RUN <<'EOF'
+set -eu
+mkdir -p /opt/startup-scripts/migration-scripts /opt/app-version
+chmod -R 755 /opt/startup-scripts
+microdnf -y install postgresql
+microdnf -y clean all
+groupadd --gid 1001 quarkus || true
+useradd --uid 1001 --gid 1001 --shell /sbin/nologin --create-home quarkus || true
+EOF
+
+# Copy migration assets
+COPY src/main/resources/schematron-validator-migration.sh /opt/startup-scripts/migration-scripts/schematron-validator-migration.sh
+# Entrypoint wrapper (runs migration then starts app)
+COPY src/main/docker/gazelle-run.sh /gazelle-run.sh
+RUN set -eux; \
+    if [ -f /opt/startup-scripts/migration-scripts/schematron-validator-migration.sh ]; then \
+      chmod 755 /opt/startup-scripts/migration-scripts/schematron-validator-migration.sh; \
+    fi; \
+    chmod 755 /gazelle-run.sh; \
+    chown -R 1001:root /opt/startup-scripts /opt/app-version /gazelle-run.sh || true
+
+EXPOSE 8084
+
+ENTRYPOINT [ "/gazelle-run.sh" ]

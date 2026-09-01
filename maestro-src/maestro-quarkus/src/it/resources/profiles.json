@@ -1,0 +1,11 @@
+[
+  {
+    "profileID": "iti-44-patient-identity-feed",
+    "profileName": "ITI-44 Patient Identity Feed HL7V3",
+    "domain": "ITI",
+    "coveredItems": ["Add Patient Record", "Update Patient Record"],
+    "standards": ["HL7v3", "IHE ITI"],
+    "version": "3.9.2"
+  }
+]
+

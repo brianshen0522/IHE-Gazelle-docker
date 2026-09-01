@@ -1,0 +1,21 @@
+{
+  "name": "validate-response",
+  "type": "validation-step",
+  "properties": [
+    {
+      "name": "expectedStatus",
+      "type": "INTEGER",
+      "value": 200
+    },
+    {
+      "name": "endpoint",
+      "type": "STRING",
+      "value": "https://test.example.com/api"
+    }
+  ],
+  "outputMappings": [
+    "responseBody:actualResponse",
+    "statusCode:actualStatus"
+  ]
+}
+

@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "requiredActions": [
+    {
+      "alias": "GAZELLE_TERMS_OF_SERVICE",
+      "name": "Gazelle Terms of Service",
+      "providerId": "GAZELLE_TERMS_OF_SERVICE",
+      "enabled": true,
+      "defaultAction": false,
+      "priority": 40,
+      "config": {}
+    }
+  ]
+}

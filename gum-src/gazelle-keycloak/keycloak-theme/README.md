@@ -1,0 +1,193 @@
+# keycloak-theme
+
+<!-- TOC -->
+* [keycloak-theme](#keycloak-theme)
+  * [Introduction](#introduction)
+  * [Login theme (gazelle)](#login-theme-gazelle)
+    * [template.ftl](#templateftl)
+    * [login.ftl](#loginftl)
+    * [terms.ftl](#termsftl)
+    * [login-reset-password.ftl](#login-reset-passwordftl)
+    * [gazelle.css](#gazellecss)
+  * [Login theme (gazelle-admin)](#login-theme-gazelle-admin)
+    * [template.ftl](#templateftl-1)
+    * [login.ftl](#loginftl-1)
+  * [Welcome theme](#welcome-theme)
+    * [index.ftl](#indexftl)
+  * [Admin theme](#admin-theme)
+    * [index.ftl](#indexftl-1)
+    * [add-user.js](#add-userjs)
+  * [Email themes](#email-themes)
+  * [Deployment](#deployment)
+  * [Development](#development)
+  * [Upgrade Keycloak](#upgrade-keycloak)
+<!-- TOC -->
+
+## Introduction
+
+In this module, you will find the custom Keycloak themes for Gazelle applications.
+
+Link to Keycloak documentation about themes: [Keycloak themes](https://www.keycloak.org/docs/latest/server_development/#_themes)
+
+## Login theme (gazelle)
+
+### template.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION/themes/src/main/resources/theme/base/login/template.ftl
+
+This file is used as a template for all the other `.ftl` files in the login range theme (login, reset password, terms, etc.).
+
+Add a dynamic style content in this file. This style is used to update the logo present above the login form.
+By default, the url to display is the IHE logo included in the jar, but it's possible to overload this logo by giving an url in the environment variable `GZL_SSO_LOGO_URL`.
+
+Example : GZL_SSO_LOGO_URL="https://gazelle.ihe.net/logo/LOGO-CATALYST.png"
+
+### login.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/base/login/login.ftl
+
+displayInfo is set to true, doesn't depend on Keycloak user registration activation.
+
+Modification from the Keycloak original file :
+
+- In info section, the link to Gazelle registration is a properties, in theme.properties overloaded by an environment variable
+  (GZL_TM_URL).
+- changed the registration url link to href="${properties.registrationUrl}">${msg("doRegister")}
+- added id="register-link", id="forgot-password-link" for cypress tests
+
+### terms.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/base/login/terms.ftl
+
+This .ftl file is called by the custom required action `GAZELLE_TERMS_OF_SERVICE`.
+
+Modification from the Keycloak original file :
+- Add a custom variable `termsOfServiceUrl` which is provided by the required action. This gives the possibility to change the url of the terms and conditions page.
+- Add message content for the key `termsLink`.
+
+### login-reset-password.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/base/login/login-reset-password.ftl
+
+Modification from the Keycloak original file :
+- Put instructions of reset password process in a div with id="kc-instructions-wrapper" at the top of the button for a better UX.
+- Set color of the text in same color that the title of the page (#363636)
+
+### gazelle.css
+
+Changed background to lightgrey
+
+Header is replaced with IHE logo. Text is not displayed with text-indent.
+
+As the layout is responsive, the logo is resized on small screens.
+
+## Login theme (gazelle-admin)
+
+This theme is used for the admin console of the Gazelle applications.
+
+### template.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/base/login/template.ftl
+
+Same as the [login theme](#templateftl) : customizable Logo above the login form.
+
+### login.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/base/login/login.ftl
+
+Update the background image, retake the background from the Welcome page.
+
+Update the login form, add "Console Administration" text with tools png.
+
+## Welcome theme
+
+This theme is used for the welcome page of the Gazelle applications.
+
+### index.ftl
+
+Extracted from https://github.com/keycloak/keycloak/blob/${KEYCLOAK_VERSION}/themes/src/main/resources/theme/keycloak/welcome/index.ftl
+
+Remove all body content in .ftl file.
+Add `<script>` section with a javascript redirection to the login page of the admin console with a view on the Gazelle realm.
+
+The redirection url is based on the KC_HOSTNAME_PATH environment variable. ${KC_HOSTNAME_PATH}/admin/master/console/#/gazelle
+
+## Admin theme
+
+This theme is used for the admin console of the Gazelle applications.
+
+Modification from the Keycloak original file :
+- Execute javascript script in order to customize the user creation form.
+- Add IHE logo in the header and the home page of the admin console.
+
+### index.ftl
+
+This `index.ftl` file is particular because the admin UI is developed under react. This ftl file is generated by Maven from an HTML file.
+
+See __maven-replacer-plugin__ in the pom of the admin-ui module : https://github.com/keycloak/keycloak/blob/26.0.6/js/apps/admin-ui/pom.xml#L96.
+
+>:warning: **WARNING** Pay attention to these lines in the `index.ftl` file :
+
+```html
+    <script type="module" crossorigin src="${resourceUrl}/assets/index-5be21fbf.js"></script>
+    <link rel="stylesheet" href="${resourceUrl}/assets/style-6d81cc7e.css">
+```
+
+The loaded javascript file and the css file are generated by webpack. 
+The name of the files is not fixed and can change from a version to another. 
+If the ids are not corrects, the admin console will not work. Update the ids according to the version of Keycloak used.
+If you don't want to compile the js module of Keycloak, you can use the network tab of the browser to find the correct ids fetched by the admin console (disable theme in `prepareKeycloakInstance.sh`).
+
+### add-user.js
+
+The file `add-user.js` is used to customize the user creation form. This script add eventListener which are triggered 
+when a user goes on the page /add-user. The script will hide some fields and rename some others.
+
+## Email themes
+
+With Keycloak, to send email you can either use the default Keycloak 
+[ones](https://github.com/keycloak/keycloak/tree/main/themes/src/main/resources/theme/base/email) or add your own ones.
+To do that you need to create 2 files with the same name. One in src/theme/gazelle/email/html, that will be the html version
+using Freemarker templating, and one in src/theme/gazelle/email/text that will the plain text version. 
+
+If translation is needed, add the key and its value in the message_XX.properties. The XX being the locale.
+
+The list of available email templates :
+- account-created.ftl
+- email-blocked.ftl
+- email-inactive-vendor.ftl
+- email-inactive-vendor-admin.ftl
+- password-updated.ftl
+
+## Deployment
+
+Following environment variables are must be provided : 
+
+- `GZL_USER_MANAGEMENT_FRONT_URL` : The url of the user management front application ( for registration url )
+- `GZL_SSO_LOGO_URL` : The url of the logo to display in the login page
+- `KC_HOSTNAME_PATH` : The path to the Keycloak server (ex: https://gazelle.ihe.net/auth) used to redirect welcome page to admin console
+
+Output jar file containing the themes should be put in /opt/keycloak/providers/ of Keycloak.
+
+Then the command `kc.sh build` should be run.
+
+## Development
+
+Start `start_keycloak_theme_design.sh`, then connect to [Keycloak Administration Console](http://localhost:8080/admin/) (admin/admin).
+
+Create a `gazelle` realm and set login them to `gazelle`.
+
+Preview [login page](http://localhost:8080/realms/gazelle/account) by clicking on Login.
+
+## Upgrade Keycloak
+
+>:warning: **Warning:** Themes are a modified version of provided Keycloak, a Keycloak upgrade might break things.
+
+It's possible that original `.ftl` files have been modified by Keycloak from a version to another. To update the custom `.ftl` files, use [this script](refresh_ftl_files.sh).
+
+This script will download the original .ftl files corresponding to the Keycloak version given in the script. 
+Provided that the paths to access to these files has not been updated.
+
+Be careful, this script will overwrite the existing files. You must reintegrate the changes made in the custom files.
+
+Take usage of `git diff` in this situation can be a good idea.

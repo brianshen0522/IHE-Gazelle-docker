@@ -1,0 +1,11 @@
+2025-01-05 10:00:00 INFO  [ITB Test Execution] Starting test case execution
+2025-01-05 10:00:01 DEBUG [ITB Test Execution] Initializing test environment
+2025-01-05 10:00:02 INFO  [ITB Test Execution] Loading test case: test-case-1
+2025-01-05 10:00:03 DEBUG [ITB Test Execution] Setting up test parameters
+2025-01-05 10:00:04 INFO  [ITB Test Execution] Executing validation steps
+2025-01-05 10:00:05 DEBUG [ITB Test Execution] Validation step 1 completed successfully
+2025-01-05 10:00:06 DEBUG [ITB Test Execution] Validation step 2 completed successfully
+2025-01-05 10:00:07 INFO  [ITB Test Execution] All validation steps completed
+2025-01-05 10:00:08 INFO  [ITB Test Execution] Test case execution completed successfully
+2025-01-05 10:00:09 DEBUG [ITB Test Execution] Cleaning up test environment
+

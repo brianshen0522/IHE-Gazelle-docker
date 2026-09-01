@@ -1,0 +1,82 @@
+{
+  "testSuite": {
+    "id": "suite-fixture",
+    "name": "Fixture Suite",
+    "testReferences": [
+      {
+        "testId": "fixture-test",
+        "properties": [
+          {
+            "name": "env",
+            "type": "STRING",
+            "value": "QA"
+          }
+        ]
+      }
+    ],
+    "supportedInputs": [
+      {
+        "id": "suite-input",
+        "type": "TEXT",
+        "label": "Suite Input",
+        "required": true,
+        "possibleValues": ["alpha", "beta"],
+        "defaultValue": "alpha"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "id": "fixture-test",
+      "name": "Fixture Test",
+      "supportedInputs": [
+        {
+          "id": "test-input",
+          "type": "TEXT",
+          "label": "Test Input",
+          "required": false,
+          "possibleValues": ["gamma"],
+          "defaultValue": "gamma"
+        }
+      ],
+      "steps": [
+        {
+          "name": "Execute",
+          "type": "simulation",
+          "properties": [
+            {
+              "name": "mode",
+              "type": "STRING",
+              "value": "AUTO"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "payload",
+      "type": "STRING",
+      "value": "fixture"
+    }
+  ],
+  "systemsUnderTest": [
+    {
+      "systemIdentification": {
+        "name": "sut-fixture",
+        "version": "1.0"
+      },
+      "macAddresses": ["aa:bb:cc:dd:ee:ff"],
+      "ipAddresses": ["192.0.2.10"],
+      "hostNames": ["sut.fixture.local"]
+    }
+  ],
+  "accessControlList": {
+    "owners": ["owner-1"],
+    "readers": ["reader-1"],
+    "editors": [],
+    "isPublic": false,
+    "readAccessKey": "access-key"
+  }
+}

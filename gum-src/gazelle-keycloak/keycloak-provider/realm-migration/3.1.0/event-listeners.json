@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "eventsListeners": [
+    "gzl-last-login",
+    "gzl-inactive-login",
+    "gzl-block-login",
+    "gzl-update-password",
+    "gzl-creation-account",
+    "gzl-reset-password-logout",
+    "jboss-logging"
+  ]
+}

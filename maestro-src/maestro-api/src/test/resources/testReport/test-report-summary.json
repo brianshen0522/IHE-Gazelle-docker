@@ -1,0 +1,12 @@
+{
+  "id": "summary-fixture",
+  "dateTime": "2025-04-12T10:15:30+01:00",
+  "result": "FAILED",
+  "location": "fixture-location",
+  "unexpectedErrors": [
+    {
+      "name": "error",
+      "message": "something failed"
+    }
+  ]
+}

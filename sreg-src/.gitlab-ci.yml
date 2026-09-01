@@ -1,0 +1,136 @@
+# Define templates
+include:
+  - project: "${GITLAB_CI_TEMPLATES_PATH}"
+    file:
+      - '${GITLAB_CI_TEMPLATES_FILE}'
+      - 'CI/stages/schedule.yaml'
+    ref: "master"
+
+# Define stages
+stages:
+  - prepare
+  - build
+  - test
+  - publish
+  - security
+  - release
+  - upgrade
+  - clean
+  - schedule
+  - scheduled-jobs
+
+# Define global variables
+variables:
+  P_NAME: "service-registry"
+  P_APP_TYPE: "java"
+  P_CODE_SRC_PATH: "."
+  P_MAVEN_IMAGE_TAG: "3.9.15-jdk-25-slim"
+  SERVICE_PATH: "."
+
+# Define jobs
+compile/unit-test:
+  stage: build
+  extends:
+    - .buildJavaMavenTest
+
+package:
+  stage: build
+  extends:
+    - .buildJavaMavenPackageWithQuarkus
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+integration-tests:
+  stage: test
+  extends:
+    - .testJavaMavenIntegrationTestsWithDocker
+  variables:
+    P_MAVEN_EXTRA_ARGS: "-DskipUTs"
+
+static-analysis:
+  stage: test
+  extends:
+    - .testJavaMavenSonarAnalysis
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+
+install-cache-repo:
+  stage: publish
+  extends:
+    - .publishJavaMavenInstall
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+    - job: package
+      artifacts: true
+    - job: integration-tests
+      artifacts: false
+
+publish-artifacts:
+  stage: publish
+  extends:
+    - .publishJavaMavenQuarkusDeploy
+  needs:
+    - job: compile/unit-test
+      artifacts: true
+    - job: package
+      artifacts: true
+    - job: integration-tests
+      artifacts: false
+
+security/containerWithTrivy:
+  stage: security
+  extends:
+    - .testSecurityContainerWithTrivy
+  variables:
+    DOCKER_IMAGE_NAME : "service-registry"
+  needs: [ "publish-artifacts" ]
+
+security/dependenciesWithOwaspDependencyCheck:
+  stage: security
+  extends:
+    - .testSecurityDependenciesForJavaWithOwaspDependencyCheck
+  needs:
+    - job: security/containerWithTrivy
+      artifacts: false
+  allow_failure: true
+  variables:
+    NVD_API_KEY: ""
+
+release/code:
+  stage: release
+  extends:
+    - .releaseCodeForQuarkus
+  when: manual
+  variables:
+    P_MAVEN_JAVADOC_SKIP: "true"
+
+release/documentation:
+  stage: release
+  extends:
+    - .releaseDocumentation
+  variables:
+    USER_DOCUMENTATION_APP_NAME: "Service-Registry"
+    JIRA_COMPONENT_NAME: "service-registry"
+  needs: [ "release/code" ]
+
+# Release test-execution docker image
+release/docker:
+  stage: release
+  extends:
+    - .releaseDockerWithQuarkus
+  variables:
+    DOCKER_IMAGE_NAME : "service-registry"
+  needs: [ "release/code" ]
+
+# FIXME: ceoche - Disable mutator jobs as long as the job is broken on CI. See with CLA on how to fix it.
+.mutator-schedule:
+  stage: schedule
+  extends:
+    - .createMutationNightlyPipeline
+  needs:
+    - job: static-analysis
+  variables:
+    CRON_SCHEDULE: "10 04 * * *"

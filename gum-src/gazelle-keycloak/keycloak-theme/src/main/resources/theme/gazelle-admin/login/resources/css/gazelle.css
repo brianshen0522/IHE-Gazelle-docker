@@ -1,0 +1,31 @@
+#kc-header-wrapper {
+    background-image: url("${url.resourcesPath}../img/gz_logo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 606px;
+    height: 128px;
+    margin: 0 auto;
+    text-indent: 200%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    #kc-header-wrapper {
+        width: 303px;
+        height: 64px;
+        margin: 0;
+        background-size: 100%;
+    }
+}
+
+/* Remove default logo of Keycloak */
+div.kc-logo-text {
+    background-image: none;
+}
+
+/* Retrieve background of welcome page */
+.login-pf body {
+    background: url("../img/bg.png") no-repeat center center fixed;
+    background-size: cover;
+}

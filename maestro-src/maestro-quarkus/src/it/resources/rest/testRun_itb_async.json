@@ -1,0 +1,43 @@
+{
+  "test": {
+    "id": "itb-test-2",
+    "name": "itb async test",
+    "steps": [
+      {
+        "name": "itb-async-step",
+        "type": "ITB",
+        "timeout": 20000,
+        "properties": [
+          {
+            "name": "systemID",
+            "value": "sys-001",
+            "type": "STRING"
+          },
+          {
+            "name": "actorID",
+            "value": "actor-001",
+            "type": "STRING"
+          },
+          {
+            "name": "testCase",
+            "value": "case-001",
+            "type": "STRING"
+          },
+          {
+            "name": "executionMode",
+            "value": "ASYNC",
+            "type": "STRING"
+          },
+          {
+            "name": "freeText",
+            "value": "hello-itb-async",
+            "type": "STRING"
+          }
+        ]
+      }
+    ]
+  },
+  "accessControlList": {
+    "isPublic": true
+  }
+}

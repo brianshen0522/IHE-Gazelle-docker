@@ -1,0 +1,21 @@
+<div>
+    <span>
+        ${msg("net.ihe.gazelle.gum.dear")} ${firstname} ${lastname},
+    </span>
+    <br>
+    <br>
+    ${msg("net.ihe.gazelle.gum.emailUpdated")}.
+    <br>
+    <br>
+    ${msg("net.ihe.gazelle.gum.emailNoLongerUsed")}.
+    <br>
+    <br>
+    ${msg("net.ihe.gazelle.gum.ifNotInitiatorContactAdministrator")}.
+    <br>
+    <br>
+    <span>
+        ${msg("net.ihe.gazelle.gum.bestRegards")},
+        <br>
+        ${msg("net.ihe.gazelle.gum.gazelleTeam")}
+    </span>
+</div>

@@ -1,0 +1,12 @@
+{
+  "validationService": {
+    "name": "{{serviceName}}",
+    "validator": "ITI-18_request"
+  },
+  "object": [
+    {
+      "objectType": "urn:hl7-org:v3",
+      "content": "dGVzdA=="
+    }
+  ]
+}

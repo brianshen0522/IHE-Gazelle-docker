@@ -1,0 +1,7 @@
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.GazelleDelegationCreateUserIfUniqueAuthenticatorFactory
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.GazelleDelegationEmailVerificationAuthenticatorFactory
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.BlockDelegatedUserLoginAuthenticatorFactory
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.GazelleDelegationReviewProfileAuthenticatorFactory
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.GazelleResetDelegatedCredentialEmailFactory
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.GazelleResetCredentialChooseUser
+net.ihe.gazelle.keycloak.provider.interlay.authenticator.OrganizationValidationAuthenticatorFactory

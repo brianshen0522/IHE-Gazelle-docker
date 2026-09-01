@@ -1,0 +1,113 @@
+[
+  {
+    "id": "CHXDS_ITI-41-42",
+    "version": "1.0",
+    "transactions": [
+      "ITI-41",
+      "ITI-42"
+    ],
+    "shortDescription": "XDS Document Source sends a Document to store and the simulator records the document's metadata in the Registry",
+    "description": "<script type=\"text/javascript\" src=\"src/purify.js\"></script><h1>CHXDS_ITI-41-42 description</h1><p>XDS Document Repository receives a Document to store and records its metadata in the Registry</p>",
+    "standards": [
+      "ebRim"
+    ],
+    "simulatedRoles": [
+      {
+        "name": "XDS Document Repository",
+        "type": "INITIATOR",
+        "configs": [
+          {
+            "name": "IP",
+            "value": "91.121.54.71",
+            "type": "TEXT"
+          }
+        ]
+      }
+    ],
+    "testedRoles": [
+      {
+        "name": "Document Registry",
+        "type": "RESPONDER"
+      }
+    ],
+    "supportedParameters": [
+      {
+        "name": "PatientId",
+        "groupName": "Sequence settings",
+        "description": "The patient related to the new document in the sequence.",
+        "type": "TEXT",
+        "required": true,
+        "options": [
+          "761337610411265304^^^&amp;2.16.756.5.30.1.127.3.10.3",
+          "761337610411265305^^^&amp;2.16.756.5.30.1.127.3.10.3"
+        ]
+      },
+      {
+        "name": "RegistryURL",
+        "groupName": "SUT identification",
+        "description": "Full endpoint URL to record the document's metadata to the Registry.",
+        "type": "TEXT",
+        "required": true
+      },
+      {
+        "name": "RepositoryUniqueId",
+        "groupName": "SUT identification",
+        "description": "Full endpoint URL to record the document's metadata to the Registry.",
+        "type": "TEXT",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "CHXDS_ITI-43",
+    "version": "1.0",
+    "transactions": [
+      "ITI-41",
+      "ITI-43"
+    ],
+    "shortDescription": "XDS Document Consumer retrieves a Document from XDS Document Reporitory",
+    "description": "XDS Document Consumer retrieves a Document from XDS Document Reporitory</p>",
+    "standards": [
+      "ebRim"
+    ],
+    "simulatedRoles": [
+      {
+        "name": "CHXDS Document Consumer",
+        "type": "INITIATOR",
+        "configs": [
+          {
+            "name": "IP",
+            "value": "91.121.54.71",
+            "type": "TEXT"
+          }
+        ]
+      }
+    ],
+    "testedRoles": [
+      {
+        "name": "Document Repository",
+        "type": "RESPONDER"
+      }
+    ],
+    "supportedParameters": [
+      {
+        "name": "PatientId",
+        "groupName": "Sequence settings",
+        "description": "The patient related to the document to retrieve in the sequence.",
+        "type": "TEXT",
+        "required": true,
+        "options": [
+          "761337610411265304^^^&amp;2.16.756.5.30.1.127.3.10.3",
+          "761337610411265305^^^&amp;2.16.756.5.30.1.127.3.10.3"
+        ]
+      },
+      {
+        "name": "RepositoryUniqueId",
+        "groupName": "SUT identification",
+        "description": "Full endpoint URL to record the document's metadata to the Registry.",
+        "type": "TEXT",
+        "required": true
+      }
+    ]
+  }
+]

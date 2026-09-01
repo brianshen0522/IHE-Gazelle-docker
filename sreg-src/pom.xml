@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2025 IHE International.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.ihe.gazelle</groupId>
+        <artifactId>factory-bom-jdk25-quarkus-3-33</artifactId>
+        <version>1.2.2</version>
+    </parent>
+
+    <artifactId>service-registry-parent</artifactId>
+    <version>2.1.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>service-registry-api</module>
+        <module>service-registry-client</module>
+        <module>service-registry</module>
+    </modules>
+
+    <contributors>
+        <contributor>
+            <organization>IHE Catalyst</organization>
+            <organizationUrl>https://ihe-catalyst.net/</organizationUrl>
+        </contributor>
+        <contributor>
+            <organization>Kereval</organization>
+            <organizationUrl>https://www.kereval.com</organizationUrl>
+        </contributor>
+        <contributor>
+            <organization>e-health-suisse</organization>
+            <organizationUrl>https://www.e-health-suisse.ch</organizationUrl>
+        </contributor>
+    </contributors>
+
+    <properties>
+        <git.project.url>
+            https://${git.user.name}:${git.user.token}@gitlab.inria.fr/gazelle/public/core/service-registry.git
+        </git.project.url>
+
+        <framework.version>4.1.1</framework.version>
+        <lang.version>3.0.0</lang.version>
+
+        <skipTests>false</skipTests>
+        <skipITs>${skipTests}</skipITs>
+        <skipUnitTests>${skipTests}</skipUnitTests>
+    </properties>
+
+    <scm>
+        <connection>scm:git:${git.project.url}</connection>
+        <developerConnection>scm:git:${git.project.url}</developerConnection>
+        <url>https://gitlab.inria.fr/gazelle/public/core/service-registry</url>
+        <tag>2.1.0</tag>
+    </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Module dependencies -->
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-api</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-client</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry</artifactId>
+                <version>2.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>framework</artifactId>
+                <version>${framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>lang</artifactId>
+                <version>${lang.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-api</artifactId>
+                <version>2.1.0</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>parent-bom-repository</id>
+            <url>https://nexus.ihe-catalyst.net/repository/maven-public</url>
+        </repository>
+    </repositories>
+</project>

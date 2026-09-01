@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "roles": {
+    "realm": [
+      {
+        "name": "default-roles-gazelle",
+        "description": "Default roles for all users in gazelle realm",
+        "composite": true,
+        "clientRole": false,
+        "composites": {
+          "realm": [
+            "user",
+            "offline_access",
+            "uma_authorization"
+          ]
+        }
+      }
+    ]
+  }
+}

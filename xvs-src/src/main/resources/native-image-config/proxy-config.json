@@ -1,0 +1,32 @@
+[
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlAccessorType","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlAnyElement","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlElements","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlMixed","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlRegistry","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.XmlSeeAlso","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["javax.annotation.Nonnegative","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["javax.annotation.Nonnull","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  },
+  {
+    "interfaces":["javax.annotation.Nullable","org.glassfish.jaxb.core.v2.model.annotation.Locatable"]
+  }
+]

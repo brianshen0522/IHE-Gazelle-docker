@@ -1,0 +1,21 @@
+[
+  {
+    "name": "KO_bad_binding_type",
+    "version": "1.0.0",
+    "instanceId": "23457",
+    "replicaId": "234568",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "2.0.0",
+        "bindings": [
+          {
+            "@type": "INVALID",
+            "serviceUrl": "http://localhost/simulation-mock/rest/mcsd"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": null
+  }
+]

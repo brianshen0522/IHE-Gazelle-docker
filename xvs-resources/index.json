@@ -1,0 +1,36 @@
+[
+  {
+    "profileID": "demo-patient-record-full",
+    "profileName": "Demo Patient Record (XSD + Schematron)",
+    "domain": "ITI",
+    "standards": [
+      "Demo XML"
+    ],
+    "xsdPath": "profiles/demo/patient-record.xsd",
+    "schematronPath": "profiles/demo/patient-record.sch",
+    "xsdVersion": "1.0",
+    "schematronVersion": "1.0",
+    "coveredItems": [
+      "PatientRecord"
+    ],
+    "cacheEnabled": false,
+    "available": true,
+    "xsltPath": "cache/patient-record.xslt"
+  },
+  {
+    "profileID": "demo-patient-record-xsd",
+    "profileName": "Demo Patient Record (XSD only)",
+    "domain": "ITI",
+    "standards": [
+      "Demo XML"
+    ],
+    "xsdPath": "profiles/demo/patient-record.xsd",
+    "xsdVersion": "1.0",
+    "coveredItems": [
+      "PatientRecord"
+    ],
+    "cacheEnabled": false,
+    "available": true,
+    "schematronVersion": "1.0"
+  }
+]

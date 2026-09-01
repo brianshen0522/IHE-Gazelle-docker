@@ -1,0 +1,11 @@
+{
+  "NAME": ["EVS_CLIENT","PROXY","GAZELLE_TM"],
+  "PATH": ["/evs","/proxy","/gazelle"],
+  "LOGOUT_BUTTON_ID":[".navbar-right > .dropdown > .dropdown-toggle",":nth-child(3) > .dropdown-toggle",".navbar-right > .dropdown > .dropdown-toggle"],
+  "NAVBAR_BRAND": ["External Validation Service Front-end","Proxy de Gazelle","Gazelle"],
+  "CHECK_AUTH_LOC": ["%2Fevs","%2Fproxy%2Fhome.seam","%2Fgazelle%2Fhome.seam"],
+  "CHECK_LOGIN": ["admin / ADMIN_ORG","Poiseau","Poiseau"]
+  
+}
+
+

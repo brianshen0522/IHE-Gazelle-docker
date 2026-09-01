@@ -1,0 +1,4 @@
+net.ihe.gazelle.keycloak.provider.interlay.mapper.TokenExpirationCasProtocolMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.GroupToRoleCasProtocolMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.GroupToRoleOIDCProtocolMapper
+net.ihe.gazelle.keycloak.provider.interlay.mapper.OrganizationKeywordProtocolMapper

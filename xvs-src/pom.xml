@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright 2014-2025 IHE International.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.ihe.gazelle</groupId>
+        <artifactId>factory-bom-jdk21-quarkus-3-27</artifactId>
+        <version>1.1.0</version>
+    </parent>
+
+    <artifactId>xml-validation-service</artifactId>
+    <version>3.1.1</version>
+    <name>XML Validation Service</name>
+
+    <scm>
+        <connection>scm:git:${git.project.url}</connection>
+        <developerConnection>scm:git:${git.project.url}</developerConnection>
+        <tag>3.1.1</tag>
+        <url>https://gitlab.inria.fr/gazelle/public/validation/xml-validation-service</url>
+    </scm>
+    <properties>
+        <git.project.path>gazelle/public/validation/xml-validation-service</git.project.path>
+        <git.project.path.ext>${git.project.path}</git.project.path.ext>
+        <git.project.url>https://${git.user.name}:${git.user.token}@gitlab.inria.fr/${git.project.path.ext}.git</git.project.url>
+
+        <framework.version>4.0.1</framework.version>
+        <validation-api.version>2.1.0</validation-api.version>
+        <serviceregistry.version>2.0.1</serviceregistry.version>
+        <phschematron.version>7.0.0</phschematron.version>
+        <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+        <native.image.config>${project.build.directory}/classes/native-image-config</native.image.config>
+        <quarkus.container-image.build>false</quarkus.container-image.build>
+        <quarkus.container-image.group>gazelle-snapshot</quarkus.container-image.group>
+        <quarkus.container-image.name>app/xml-validation-service</quarkus.container-image.name>
+        <quarkus.container-image.registry>rg.fr-par.scw.cloud</quarkus.container-image.registry>
+        <quarkus.container-image.tag>${project.version}</quarkus.container-image.tag>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Quarkus platform is declared in the bom factory but will be overridden by the Quarkus version from
+          libraries using previous Quarkus version.So to avoid conflict we redeclare it here. It will be removed when
+          the Quarkus version of all libraries is updated-->
+            <dependency>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>framework</artifactId>
+                <version>${framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Quarkus -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jaxb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-metrics</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-docker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-websockets-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc</artifactId>
+        </dependency>
+        <!-- implementation of jakarta.ws.rs-api -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest</artifactId>
+        </dependency>
+        <!-- implementation of jackson-databind -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+        </dependency>
+        <!-- implementation microprofile-openapi-api -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
+
+
+        <!-- Gazelle -->
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>validation-v2-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>validation-v2-jaxrs-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>validation-v2-jaxrs-ws</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>validation-v2-client</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>service-metadata-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>service-metadata-jaxrs-ws</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>lang</artifactId>
+        </dependency>
+
+        <!-- Service registry dependencies -->
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>service-registry-client</artifactId>
+            <version>${serviceregistry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ihe.gazelle</groupId>
+            <artifactId>m2m-client</artifactId>
+        </dependency>
+        <!-- Other -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- Schematron -->
+        <dependency>
+            <groupId>com.helger.schematron</groupId>
+            <artifactId>ph-schematron-api</artifactId>
+            <version>${phschematron.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.helger.schematron</groupId>
+            <artifactId>ph-schematron-xslt</artifactId>
+            <version>${phschematron.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.helger.schematron</groupId>
+            <artifactId>ph-schematron-pure</artifactId>
+            <version>${phschematron.version}</version>
+        </dependency>
+
+        <!-- For reflection registration in Native generation -->
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-vfs</artifactId>
+            <version>3.2.17.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thaiopensource</groupId>
+            <artifactId>jing</artifactId>
+            <version>20091111</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.saxon</groupId>
+                    <artifactId>saxon</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.platform.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>IHE</id>
+            <name>IHE Public Maven Repository Group</name>
+            <url>https://nexus.ihe-catalyst.net/repository/maven-public</url>
+        </repository>
+    </repositories>
+
+</project>

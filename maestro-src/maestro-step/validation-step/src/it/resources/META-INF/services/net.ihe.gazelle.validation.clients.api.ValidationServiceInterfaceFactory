@@ -1,0 +1,3 @@
+net.ihe.gazelle.modelbased.client.ModelBasedValidationServiceFactory
+client.CertificateValidationServiceFactory
+net.ihe.gazelle.gitb.client.GitbValidationServiceFactory

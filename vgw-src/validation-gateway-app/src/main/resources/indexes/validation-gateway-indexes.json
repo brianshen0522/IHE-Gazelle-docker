@@ -1,0 +1,38 @@
+[
+  {
+    "logicalName": "type",
+    "itemType": "ITEM",
+    "fieldType": "STRING",
+    "fullName": "type",
+    "keys": {
+      "type": 1
+    }
+  },
+  {
+    "logicalName": "evs_oid",
+    "itemType": "VALIDATION_REPORT",
+    "fieldType": "STRING",
+    "fullName": "additionalParameters.evs_oid",
+    "keys": {
+      "type": 1,
+      "additionalParameters.evs_oid": 1
+    }
+  },
+  {
+    "logicalName": "profileId",
+    "itemType": "ITEM",
+    "fieldType": "STRING",
+    "fullName": "content.validationMethod.validationProfileID",
+    "keys": {
+      "content.validationMethod.validationProfileID": 1,
+      "type": 1,
+      "date": -1
+    }
+  },
+  {
+    "keys": {
+      "type": 1,
+      "additionalParameters.migration_name": 1
+    }
+  }
+]

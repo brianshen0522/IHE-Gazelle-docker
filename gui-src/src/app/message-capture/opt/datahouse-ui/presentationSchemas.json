@@ -1,0 +1,51 @@
+[
+  {
+    "name": "message_list_summary",
+    "type": "MESSAGE",
+    "itemPaths": ["/id", "/date", "/type", "/content", "/additionalParameters", "/references/value", "references/type", "/accessControlList"],
+    "contentPaths": [
+      "/channelType",
+      "/secured",
+      "/mtls",
+      "/captureDate",
+      "/proxyPort",
+      "/connectionTimestamp",
+      "/sender/hostname",
+      "/receiver/hostname",
+      "/sender/ip",
+      "/sender/port",
+      "/receiver/ip",
+      "/receiver/port",
+      "/type",
+      "/unexpectedErrors",
+      "/rootType",
+      "/additionalParameters",
+      "/method",
+      "/status",
+      "/uri",
+      "/headerSize",
+      "/bodySize",
+      "/hl7MessageType",
+      "/hl7Version",
+      "/sizeOfMessage",
+      "/appName",
+      "/messageId",
+      "/commandField",
+      "/affectedSopClassUid",
+      "/status",
+      "/sizeOfDataset",
+      "/initiator/hostname",
+      "/responder/hostname",
+      "/initiator/ip",
+      "/responder/ip",
+      "/initiator/port",
+      "/responder/port",
+      "/list/message"
+    ]
+  },
+  {
+    "name": "itemsWithId",
+    "type": "MESSAGE",
+    "itemPaths": ["/id"]
+  }
+]

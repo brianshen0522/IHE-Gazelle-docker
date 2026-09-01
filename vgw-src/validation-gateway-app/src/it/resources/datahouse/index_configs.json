@@ -1,0 +1,53 @@
+
+[
+  {
+    "name": "sender_ip",
+    "itemType": "MESSAGE",
+    "fullName": "content.sender.ip",
+    "fieldType": "STRING",
+    "value": "{ \"content.sender.ip\": 1 }"
+  },
+  {
+    "name": "receiver_ip",
+    "itemType": "MESSAGE",
+    "fullName": "content.receiver.ip",
+    "fieldType": "STRING",
+    "value": "{ \"content.receiver.ip\": 1 }"
+  },
+  {
+    "name": "sender_port",
+    "itemType": "MESSAGE",
+    "fullName": "content.sender.port",
+    "fieldType": "INTEGER",
+    "value": "{ \"content.sender.port\": 1 }"
+  },
+  {
+    "name": "secured",
+    "itemType": "MESSAGE",
+    "fullName": "content.secured",
+    "fieldType": "BOOLEAN",
+    "value": "{ \"content.secured\": 1 }"
+  },
+  {
+    "name": "type",
+    "itemType": "MESSAGE",
+    "fullName": "type",
+    "fieldType": "STRING",
+    "value": "{ \"type\": 1 }"
+  },
+  {
+    "name": "date",
+    "itemType": "MESSAGE",
+    "fullName": "date",
+    "fieldType": "STRING",
+    "value": "{ \"date\": 1 }"
+  },
+  {
+    "name": "proxy_port",
+    "itemType": "MESSAGE",
+    "fullName": "content.proxyPort",
+    "fieldType": "INTEGER",
+    "value": "{ \"content.proxyPort\": 1 }"
+  }
+
+]

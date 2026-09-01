@@ -1,0 +1,775 @@
+asyncapi: 3.0.0
+info:
+  title: Test Run Stream API
+  description: WebSocket API for maestro test execution.
+  version: 1.0.0
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  maestro:
+    description: WebSocket server for maestro test execution.
+    host: '{fqdn}'
+    pathname: /maestro
+    protocol: ws
+    variables:
+      fqdn:
+        description: Fully qualified domain name of maestro.
+        default: localhost:8150
+defaultContentType: application/json
+channels:
+  test-execution:
+    address: '/v1/test-stream/run'
+    description: Channel for executing a test or a test suite.
+    messages:
+      startTestSuiteRun:
+        $ref: '#/components/messages/startTestSuiteRun'
+      startTestRun:
+        $ref: '#/components/messages/startTestRun'
+      testRunStarted:
+        $ref: '#/components/messages/testRunStarted'
+      stepRunStarted:
+        $ref: '#/components/messages/stepRunStarted'
+      interactWithUser:
+        $ref: '#/components/messages/interactWithUser'
+      userInteractionCompleted:
+        $ref: '#/components/messages/userInteractionCompleted'
+      stepRunFinished:
+        $ref: '#/components/messages/stepRunFinished'
+      testRunFinished:
+        $ref: '#/components/messages/testRunFinished'
+      executionFinished:
+        $ref: '#/components/messages/executionFinished'
+    bindings:
+      http:
+        method: GET
+        headers:
+          Upgrade: websocket
+          Connection: Upgrade
+operations:
+  executeTestSuite:
+    title: Execute a test suite
+    action: send
+    description: This API is used to execute a Gazelle test suite with the maestro engine.
+    channel:
+      $ref: '#/channels/test-execution'
+    messages:
+      - $ref: '#/channels/test-execution/messages/startTestSuiteRun'
+    reply:
+      channel:
+        $ref: '#/channels/test-execution'
+      messages:
+        - $ref: '#/channels/test-execution/messages/testRunStarted'
+        - $ref: '#/channels/test-execution/messages/stepRunStarted'
+        - $ref: '#/channels/test-execution/messages/stepRunFinished'
+        - $ref: '#/channels/test-execution/messages/testRunFinished'
+        - $ref: '#/channels/test-execution/messages/executionFinished'
+  executeTest:
+    title: Execute a test
+    action: send
+    description: This API is used to execute a Gazelle test with the maestro engine.
+    channel:
+      $ref: '#/channels/test-execution'
+    messages:
+      - $ref: '#/channels/test-execution/messages/startTestRun'
+    reply:
+      channel:
+        $ref: '#/channels/test-execution'
+      messages:
+        - $ref: '#/channels/test-execution/messages/startTestRun'
+        - $ref: '#/channels/test-execution/messages/stepRunStarted'
+        - $ref: '#/channels/test-execution/messages/stepRunFinished'
+        - $ref: '#/channels/test-execution/messages/executionFinished'
+  interactWithUser:
+    title: User interaction
+    action: receive
+    channel:
+      $ref: '#/channels/test-execution'
+    messages:
+      - $ref: '#/channels/test-execution/messages/interactWithUser'
+    reply:
+      channel:
+        $ref: '#/channels/test-execution'
+      messages:
+        - $ref: '#/channels/test-execution/messages/userInteractionCompleted'
+components:
+  messages:
+    startTestSuiteRun:
+      title: Start Test Suite Run
+      summary: Message to start a test suite run
+      payload:
+        $ref: '#/components/schemas/StartTestSuiteRun'
+    startTestRun:
+      title: Start Test Run
+      summary: Message to start a test run
+      payload:
+        $ref: '#/components/schemas/StartTestRun'
+    testRunStarted:
+      title: Test Run Started
+      summary: Notification that a test run has started
+      payload:
+        $ref: '#/components/schemas/TestRunStarted'
+    stepRunStarted:
+      title: Step Run Started
+      summary: Notification that a step run has started
+      payload:
+        $ref: '#/components/schemas/StepRunStarted'
+    interactWithUser:
+      title: Interact with User
+      summary: Message sent when a step is asking for user interaction.
+      payload:
+        $ref: '#/components/schemas/InteractWithUser'
+    userInteractionCompleted:
+      title: User Interaction Completed
+      summary: Message sent when a user interaction is completed.
+      payload:
+        $ref: '#/components/schemas/UserInteractionCompleted'
+    stepRunFinished:
+      title: Step Run Finished
+      summary: Notification that a step run has finished
+      payload:
+        $ref: '#/components/schemas/StepRunFinished'
+    testRunFinished:
+      title: Test Run Finished
+      summary: Notification that a test run has finished
+      payload:
+        $ref: '#/components/schemas/TestRunFinished'
+    executionFinished:
+      title: Execution Finished
+      summary: Notification that the entire execution has finished
+      payload:
+        $ref: '#/components/schemas/ExecutionFinished'
+  schemas:
+    StartTestSuiteRun:
+      description: Message to start a test suite run
+      type: object
+      required:
+        - type
+        - testSuiteRun
+      properties:
+        type:
+          type: string
+          const: START_TEST_SUITE_RUN
+        testSuiteRun:
+          description: Test suite run to execute.
+          $ref: '#/components/schemas/TestSuiteRun'
+        persist:
+          description: Whether the test suite report should be persisted.
+          type: boolean
+          default: true
+    StartTestRun:
+      description: Message to start a test run
+      type: object
+      required:
+        - type
+        - testRun
+      properties:
+        type:
+          type: string
+          const: START_TEST_RUN
+        testRun:
+          description: Test run to execute.
+          $ref: '#/components/schemas/TestRun'
+        persist:
+          description: Whether the test suite report should be persisted.
+          type: boolean
+          default: true
+    TestRunStarted:
+      description: Notification that a test run has started
+      type: object
+      required:
+        - type
+        - testId
+        - dateTime
+      properties:
+        type:
+          type: string
+          const: TEST_RUN_STARTED
+        testId:
+          description: The unique identifier of the test.
+          type: string
+        dateTime:
+          description: The zoned date time of the beginning of the execution of the test.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+    StepRunStarted:
+      description: Notification that a step run has started
+      type: object
+      required:
+        - type
+        - testId
+        - stepIndex
+        - dateTime
+      properties:
+        type:
+          type: string
+          const: STEP_RUN_STARTED
+        testId:
+          description: The unique identifier of the test that own this step.
+          type: string
+        stepIndex:
+          description: The index of the step in the test.
+          type: integer
+        dateTime:
+          description: The zoned date time of the beginning of the execution of the step.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+    InteractWithUser:
+      description: Message sent when a step is asking for user interaction.
+      type: object
+      required:
+        - type
+        - interactionTitle
+        - message
+        - timeout
+        - supportedInputs
+      properties:
+        type:
+          type: string
+          const: INTERACT_WITH_USER
+        interactionTitle:
+          description: The title of the user interaction.
+          type: string
+        message:
+          description: The text giving the instructions to the user for performing the interaction.
+          type: string
+        timeout:
+          description: The maximum amount of time in milliseconds to perform the user interaction.
+          type: integer
+        supportedInputs:
+          description: A list of unexpected errors that can occur during step execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInput'
+    UserInteractionCompleted:
+      description: Message sent when a user interaction is completed.
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          const: USER_INTERACTION_COMPLETED
+        inputs:
+          description: The inputs provided by the user.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    StepRunFinished:
+      description: Message sent when a step is finished.
+      type: object
+      required:
+        - type
+        - testId
+        - stepIndex
+        - dateTime
+        - result
+      properties:
+        type:
+          type: string
+          const: STEP_RUN_FINISHED
+        testId:
+          description: The unique identifier of the test that own this step.
+          type: string
+        stepIndex:
+          description: The index of the step in the test.
+          type: integer
+        dateTime:
+          description: The zoned date time of the end of the execution of the step.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+        result:
+          description: The result of the step execution.
+          enum: [ DONE, PASSED, FAILED, UNDEFINED ]
+        unexpectedErrors:
+          description: A list of unexpected errors that can occur during step execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/UnexpectedError'
+    TestRunFinished:
+      description: Message sent when a test run is finished.
+      type: object
+      required:
+        - type
+        - testId
+        - dateTime
+        - result
+      properties:
+        type:
+          type: string
+          const: TEST_RUN_FINISHED
+        testId:
+          description: The unique identifier of the test.
+          type: string
+        dateTime:
+          description: The zoned date time of the end of the execution of the test.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+        result:
+          description: The result of the test execution.
+          enum: [ PASSED, FAILED, UNDEFINED ]
+        unexpectedErrors:
+          description: A list of unexpected errors that can occur during test execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/UnexpectedError'
+    ExecutionFinished:
+      description: Message sent when the execution of a test suite or a test is finished.
+      type: object
+      required:
+        - type
+        - testReport
+      properties:
+        type:
+          type: string
+          const: EXECUTION_FINISHED
+        testReport:
+          description: The test report of the test suite or test execution.
+          $ref: '#/components/schemas/TestReport'
+        location:
+          description: A link to retrieve the test report.
+          type: string
+    TestSuiteRun:
+      description: A test suite run is a test suite execution.
+      type: object
+      required:
+        - testSuite
+      properties:
+        testSuite:
+          description: The test suite definition that will be used for execution.
+          $ref: '#/components/schemas/TestSuite'
+        tests:
+          description: The list of tests to execute.
+          type: array
+          items:
+            $ref: '#/components/schemas/Test'
+        inputs:
+          description: A list of input provided for test suite execution that shall match supported inputs of test suite definition.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        systemsUnderTest:
+          description: The list of system under test involved in the test suite.
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemUnderTest'
+        accessControlList:
+          description: An access control list for read, write authorization.
+          $ref: '#/components/schemas/AccessControlList'
+    TestRun:
+      description: A test run to be executed by the test engine.
+      type: object
+      required:
+        - test
+      properties:
+        test:
+          $ref: '#/components/schemas/TestDef'
+        inputs:
+          description: A list of input provided for test execution that shall match supported inputs of test definition.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        accessControlList:
+          description: An access control list for read, write authorization.
+          $ref: '#/components/schemas/AccessControlList'
+        systemsUnderTest:
+          description: The list of system under test involved in the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemUnderTest'
+    TestSuite:
+      description: The test suite is a test scenario where one or more test can be executed sequentially.
+      type: object
+      required:
+        - id
+        - name
+        - testReferences
+      properties:
+        id:
+          description: The unique identifier of the test suite.
+          type: string
+        name:
+          description: The name of the test suite.
+          type: string
+        testReferences:
+          description: The list of test referenced by the test suite.
+          type: array
+          items:
+            $ref: '#/components/schemas/TestReference'
+        supportedInputs:
+          description: A list of input that can be accessible across all test in the test suite.
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedInput'
+    TestDef:
+      description: The test to execute.
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          description: The unique identifier of the test.
+          type: string
+        name:
+          description: The name of the test.
+          type: string
+        supportedInputs:
+          description: The list of input that are supported by the test.
+          type: string
+        steps:
+          description: The list of step that will be executed by the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/Step'
+    Step:
+      description: A test step to execute.
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          description: The name of the test step.
+          type: string
+        type:
+          description: The type of the test step.
+          type: string
+        timeout:
+          description: The maximum time in milliseconds to let the execution running.
+          type: integer
+        properties:
+          description: A list of properties used by the step during execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        outputMappings:
+          description: A list of mapping for the outputs of the test step.
+          type: array
+          items:
+            type: string
+    TestReference:
+      description: The test reference is the test id linked to a list of properties in the test suite definition.
+      type: object
+      required:
+        - testId
+      properties:
+        testId:
+          description: The unique identifier of the referenced test.
+          type: string
+        properties:
+          description: The list of properties of the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    TestReport:
+      description: The report containing the result of a test suite or test execution.
+      type: object
+      required:
+        - uuid
+        - result
+        - dateTime
+      properties:
+        uuid:
+          description: The unique identifier of the test report.
+          type: string
+        result:
+          description: The global result of the test suite.
+          enum: [ PASSED, FAILED, UNDEFINED ]
+        dateTime:
+          description: The zoned date time of the test suite execution.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+        testService:
+          description: The service used as the test engine to execute the test suite.
+          $ref: '#/components/schemas/TestService'
+        systemsUnderTest:
+          description: The list of system under test involved in the test suite.
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemUnderTest'
+        testSuiteName:
+          description: The name of the test suite that has been executed.
+          type: string
+        testCounters:
+          description: The counters that summarize the results of test runs in the suite.
+          $ref: '#/components/schemas/TestCounters'
+        note:
+          description: A note to attach to the test report.
+          type: string
+        urlToTestSuiteResult:
+          description: A link to retrieve the test report.
+          type: string
+        testRunReports:
+          description: The list of test run report that was part of the test suite.
+          type: array
+          items:
+            $ref: '#/components/schemas/TestRunReport'
+        subReports:
+          description: A list of included test reports.
+          type: array
+          items:
+            $ref: '#/components/schemas/TestReport'
+        unexpectedErrors:
+          description: The list of unexpected errors that can occur during test suite execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/UnexpectedError'
+    TestRunReport:
+      description: The report containing the result of a test run.
+      type: object
+      required:
+        - dateTime
+        - result
+        - test
+      properties:
+        runId:
+          description: The unique identifier of the test run.
+          type: string
+        dateTime:
+          description: The zoned date time of the test execution.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+        result:
+          description: The result of the test execution.
+          enum: [ PASSED, FAILED, UNDEFINED ]
+        test:
+          description: The test that has been executed.
+          $ref: '#/components/schemas/Test'
+        inputs:
+          description: The list of inputs used to execute the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        outputs:
+          description: The list of outputs produced by the test execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        stepRunReports:
+          description: The list reports for each step executed in the test.
+          type: array
+          items:
+            $ref: '#/components/schemas/StepRunReport'
+        urlToTestRun:
+          description: The link to retrieve the test execution report.
+          type: string
+        unexpectedErrors:
+          description: The list of unexpected errors that can occur during test suite execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/UnexpectedError'
+    StepRunReport:
+      description: A report containing the result of a test step execution.
+      type: object
+      required:
+        - stepName
+        - type
+        - dateTime
+        - result
+      properties:
+        stepName:
+          description: The name of the step that has been executed.
+          type: string
+        type:
+          description: The type of the step that has been executed.
+          type: string
+        dateTime:
+          description: The zoned date time of the step execution.
+          type: string
+          examples:
+            - 2025-01-01T16:30:00.387+01:00
+        result:
+          description: The result of the test step.
+          enum: [ PASSED, FAILED, UNDEFINED ]
+        outputs:
+          description: The outputs of the step execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+        unexpectedErrors:
+          description: The list of unexpected errors that can occur during test suite execution.
+          type: array
+          items:
+            $ref: '#/components/schemas/UnexpectedError'
+    Test:
+      description: The test that has been executed.
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          description: The unique identifier of the test.
+          type: string
+        name:
+          description: The name of the test.
+          type: string
+        version:
+          description: The version of the test.
+          type: string
+        description:
+          description: The description of the test.
+          type: string
+    TestService:
+      description: The service used as the test engine to execute the test suite.
+      type: object
+      required:
+        - serviceIdentification
+        - disclaimer
+      properties:
+        serviceIdentification:
+          description: The identification of the service with name and version.
+          $ref: '#/components/schemas/EntityIdentification'
+        disclaimer:
+          description: A disclaimer about the test service.
+          type: string
+    TestCounters:
+      description: The counters for each possible result for a test execution.
+      type: object
+      required:
+        - total
+        - passed
+        - failed
+        - undefined
+        - unexpectedErrors
+      properties:
+        total:
+          description: The total number of tests executed.
+          type: integer
+        passed:
+          description: The number of passed tests.
+          type: integer
+        failed:
+          description: The number of failed tests.
+          type: integer
+        undefined:
+          description: The number of undefined tests.
+          type: integer
+        unexpectedErrors:
+          description: The number of unexpected errors.
+          type: integer
+    SupportedInput:
+      description: An input that can be used by one or more step during execution.
+      type: object
+      required:
+        - id
+        - type
+        - label
+      properties:
+        id:
+          description: The unique identifier of the input.
+          type: string
+        type:
+          type: string
+          enum: [ TEXT, FILE, BOOLEAN, VALUE_SET ]
+        label:
+          description: A human readable text to label the input.
+          type: string
+        groupName:
+          description: A name to gather inputs of the same kind together.
+          type: string
+        description:
+          description: The description of what is supposed to be uploaded in the input.
+          type: string
+        required:
+          description: A boolean value to specify if the input in mandatory or optional.
+          type: boolean
+    Property:
+      description: A property containing a typed value.
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          description: The name of the property.
+          type: string
+        type:
+          type: string
+          enum: [ STRING, INTEGER, BOOLEAN, FLOAT, DATE, BYTE_ARRAY ]
+        value:
+          description: The value of the property.
+          type: object
+    SystemUnderTest:
+      description: The system that has been tested by the test execution.
+      type: object
+      required:
+        - systemIdentification
+      properties:
+        systemIdentification:
+          description: The identification of the system under test.
+          $ref: '#/components/schemas/EntityIdentification'
+        macAddresses:
+          description: The list of mac addresses of the system under test.
+          type: array
+          items:
+            type: string
+        ipAddresses:
+          description: The list of ip addresses of the system under test.
+          type: array
+          items:
+            type: string
+        hostNames:
+          description: The list of host names of the system under test.
+          type: array
+          items:
+            type: string
+    EntityIdentification:
+      description: The name and version used to identify an entity.
+      type: object
+      required:
+        - name
+      properties:
+        version:
+          description: The version of the entity.
+          type: string
+        name:
+          description: The name of the entity.
+          type: string
+    AccessControlList:
+      description: The Access Control List (ACL) associated with a resource.
+      type: object
+      properties:
+        owners:
+          description: The list of owners of the resource.
+          type: array
+          items:
+            type: string
+        readers:
+          description: The authorized readers of the resource.
+          type: array
+          items:
+            type: string
+        editors:
+          description: The authorized editors of the resource.
+          type: array
+          items:
+            type: string
+        isPublic:
+          description: Indicates whether the resource is public or private.
+          type: boolean
+        readAccessKey:
+          description: The read access key for the resource.
+          type: string
+    UnexpectedError:
+      description: Unexpected Error that occurred during the process.
+      type: object
+      required:
+        - name
+        - message
+      properties:
+        name:
+          description: The name of the error.
+          type: string
+        message:
+          description: The message describing of the error.
+          type: string
+        cause:
+          description: The cause of the given error.
+          $ref: '#/components/schemas/UnexpectedError'

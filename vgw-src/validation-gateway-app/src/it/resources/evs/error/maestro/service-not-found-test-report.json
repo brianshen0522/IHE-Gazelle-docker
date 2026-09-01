@@ -1,0 +1,10 @@
+{
+  "uuid": "report-1",
+  "result": "FAILED",
+  "unexpectedErrors": [
+    {
+      "message": "Validation service not found"
+    }
+  ],
+  "testRunReports": []
+}

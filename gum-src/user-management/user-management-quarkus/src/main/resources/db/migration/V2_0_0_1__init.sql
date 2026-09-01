@@ -1,0 +1,13 @@
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Admin rights (ie. a user allowed to do everything)', 'admin_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Monitor rights (ie. a user allowed to validate tests)', 'monitor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Project Manager rights (ie. a user allowed to do everything except access to financial information)', 'project-manager_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Accounting rights (ie. a user allowed to update financial and administrative information)', 'accounting_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Vendor Administrator rights (ie. a user able to manage (CRUD) all its company information (users, systems, contacts, financial)', 'vendor_admin_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Vendor rights (ie. a user with limited rights able to manage its information and the systems he/she creates', 'vendor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with some simple user rights (ie. a user who wants to perform search with his preferences). This role has low privileges', 'user_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Editor rights (ie. a user allowed to update Technical Framework information)', 'tf_editor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Tests Editor rights (ie. a user allowed to update Tests definition)', 'tests_editor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Administrative Editor rights (ie. a user allowed to update administrative -institutions, users, contacts- informations)', 'institutions_editor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Profile with Systems Editor rights (ie. a user allowed to update systems information)', 'systems_editor_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'Role to allow the user to modify the content of a system or add or delete a system', 'vendor_late_registration_role');
+INSERT INTO gum.role (id, description, name) VALUES (nextval('gum.role_seq'), 'User with the Testing Session Administration rights', 'testing_session_admin_role');

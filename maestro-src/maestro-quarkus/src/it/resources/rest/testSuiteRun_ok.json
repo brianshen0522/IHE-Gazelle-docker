@@ -1,0 +1,52 @@
+{
+  "testSuite": {
+    "id": "testSuite",
+    "name": "testSuite",
+    "testReferences":[
+      {
+        "testId": "1"
+      }
+    ]
+  },
+  "accessControlList": {
+    "owners": [
+      "gazelle",
+      "tm-integration"
+    ],
+    "isPublic": true
+  },
+  "tests": [
+    {
+      "id": "1",
+      "name": "name1",
+      "supportedInputs": [
+        {
+          "id": "inputFile1",
+          "type": "FILE",
+          "label": "inputFile1",
+          "required": true
+        }
+      ],
+      "steps": [
+        {
+          "name": "step1",
+          "type": "UNIT_TEST",
+          "properties": [
+            {
+              "name": "requiredInput",
+              "value": "test",
+              "type": "STRING"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "inputFile1",
+      "value": "ihfeorhqifrghqpervgh",
+      "type": "BYTE_ARRAY"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "inputs": [
+    {
+      "name": "system",
+      "type": "map",
+      "item": [
+        {
+          "name": "id",
+          "type": "number",
+          "value": "123"
+        },
+        {
+          "name": "shortName",
+          "type": "string",
+          "value": "TEST_SYS"
+        },
+        {
+          "name": "fullName",
+          "type": "string",
+          "value": "Test System for ITB Integration"
+        }
+      ]
+    },
+    {
+      "name": "testSession",
+      "type": "map",
+      "item": [
+        {
+          "name": "testSuiteIdentifier",
+          "type": "string",
+          "value": "test-suite-1"
+        },
+        {
+          "name": "testCaseIdentifier",
+          "type": "string",
+          "value": "test-case-1"
+        },
+        {
+          "name": "testSessionIdentifier",
+          "type": "string",
+          "value": "test-session-123"
+        }
+      ]
+    },
+    {
+      "name": "testReport",
+      "type": "string",
+      "value": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<TestCaseOverviewReport xmlns=\"http://www.gitb.com/tr/v1/\" xmlns:ns2=\"http://www.gitb.com/core/v1/\" xmlns:ns3=\"http://www.gitb.com/tbs/v1/\" id=\"test-case-1\">\n    <metadata>\n        <ns2:name>ITB Integration Test Case</ns2:name>\n        <ns2:description>Test case for ITB integration with Maestro.</ns2:description>\n    </metadata>\n    <startTime>2025-01-05T10:00:00.000+01:00</startTime>\n    <endTime>2025-01-05T10:05:00.000+01:00</endTime>\n    <result>SUCCESS</result>\n    <message>The test succeeded.</message>\n    <steps>\n        <step id=\"1\">\n            <description>Step 1: Validation step</description>\n            <report xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"SR\" id=\"1\">\n                <date>2025-01-05T10:03:00.000+01:00</date>\n                <result>SUCCESS</result>\n            </report>\n        </step>\n    </steps>\n</TestCaseOverviewReport>"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Demo PDQ Simulator",
+    "version": "1.0.0",
+    "instanceId": "demo-pdq",
+    "replicaId": "001",
+    "description": "Static demo simulator (Patient Demographics Supplier). Informational only.",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://static-sim/static-simulator/pdq"
+          }
+        ]
+      }
+    ]
+  }
+]

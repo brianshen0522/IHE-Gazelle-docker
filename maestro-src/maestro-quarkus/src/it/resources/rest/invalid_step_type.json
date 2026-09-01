@@ -1,0 +1,37 @@
+{
+  "testSuite": {
+    "id": "testSuite",
+    "name": "testSuite",
+    "testReferences":[
+      {
+        "testId": "1"
+      }
+    ]
+  },
+  "accessControlList": {
+    "owners": [
+      "gazelle",
+      "tm-integration"
+    ],
+    "isPublic": true
+  },
+  "tests": [
+    {
+      "id": "1",
+      "name": "name1",
+      "steps": [
+        {
+          "name": "INVALID",
+          "type": "INVALID",
+          "properties": [
+            {
+              "name": "requiredInput",
+              "value": "test",
+              "type": "STRING"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

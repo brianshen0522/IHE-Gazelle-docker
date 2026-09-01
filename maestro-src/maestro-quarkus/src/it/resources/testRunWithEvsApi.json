@@ -1,0 +1,40 @@
+[
+  {
+    "testSetId": "Simple Test without description",
+    "testSetRunId": "testRun1",
+    "test": {
+      "id": "Simple Test without description",
+      "name": "Simple Test without description",
+      "steps": [
+        {
+          "name": "Validation Step",
+          "type": "VALIDATION",
+          "properties": [
+            {
+              "name": "validationService",
+              "type": "string",
+              "value": "Gazelle HL7 Validator (HL7v3)"
+            },
+            {
+              "name": "validationProfile",
+              "type": "string",
+              "value": "[ITI-44] Patient Identity Feed HL7V3 - Add Patient Record"
+            },
+            {
+              "name": "contentToValidate",
+              "type": "byteArray",
+              "value": "${inputFile1}"
+            }
+          ]
+        }
+      ]
+    },
+    "inputs": [
+      {
+        "name": "inputFile1",
+        "type": "byteArray",
+        "value": "ihfeorhqifrghqpervgh"
+      }
+    ]
+  }
+]

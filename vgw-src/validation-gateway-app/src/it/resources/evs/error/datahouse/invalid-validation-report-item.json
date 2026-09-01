@@ -1,0 +1,16 @@
+{
+  "id": "123",
+  "type": "VALIDATION_REPORT",
+  "date": 1735755000387,
+  "content": "{broken-json",
+  "additionalParameters": {},
+  "references": [],
+  "accessControlList": {
+    "owners": ["gazelle"],
+    "readers": [],
+    "editors": [],
+    "public": true,
+    "isPublic": true,
+    "readAccessKey": null
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "enabled": true,
+  "realm": "$(env:REALM:-gazelle)",
+  "roles": {
+    "realm": [
+      {
+        "name": "admin_role",
+        "description": "Gazelle administrator",
+        "composite": true,
+        "clientRole": false,
+        "composites": {
+          "client": {
+            "realm-management": [
+              "query-users",
+              "query-realms",
+              "manage-users",
+              "query-groups",
+              "view-events"
+            ]
+          }
+        }
+      },
+      {
+        "name": "vendor_late_registration_role",
+        "description": "vendor_late_registration_role",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "vendor_role",
+        "description": "Gazelle organization member",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "vendor_admin_role",
+        "description": "Gazelle organization administrator",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "user_role",
+        "description": "Gazelle user",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "testing_session_admin_role",
+        "description": "Gazelle testing session administrator",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "tests_editor_role",
+        "description": "Gazelle tests editor",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "project-manager_role",
+        "description": "Gazelle project manager",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "monitor_role",
+        "description": "Gazelle monitor",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  }
+}

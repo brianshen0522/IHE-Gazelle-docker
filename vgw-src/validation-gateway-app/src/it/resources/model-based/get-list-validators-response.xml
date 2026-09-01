@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <ns2:getListValidatorsResponse xmlns:ns2="http://validationservice.gazelle.ihe.net/">
+    <return>
+      <name>mock-model-based-service</name>
+      <Validators>
+        <value>MBV-VALIDATOR-1</value>
+      </Validators>
+    </return>
+  </ns2:getListValidatorsResponse>
+  </soap:Body>
+</soap:Envelope>

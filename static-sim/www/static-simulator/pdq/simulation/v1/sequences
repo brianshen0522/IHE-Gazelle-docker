@@ -1,0 +1,18 @@
+[
+  {
+    "id": "DEMO_PDQ_ITI-21",
+    "version": "1.0",
+    "runnable": false,
+    "transactions": ["ITI-21"],
+    "shortDescription": "Demo: Patient Demographics Supplier answers a PDQ query (static, not runnable)",
+    "description": "<p>Demonstration sequence served by a static simulator entry. The simulator answers an ITI-21 Patient Demographics Query. This entry is informational only (runnable=false) — it shows how simulators appear in the Simulation portal once registered in the Service Registry.</p>",
+    "standards": ["HL7v2"],
+    "simulatedRoles": [
+      { "name": "Patient Demographics Supplier", "type": "RESPONDER" }
+    ],
+    "testedRoles": [
+      { "name": "Patient Demographics Consumer", "type": "INITIATOR" }
+    ],
+    "supportedParameters": []
+  }
+]

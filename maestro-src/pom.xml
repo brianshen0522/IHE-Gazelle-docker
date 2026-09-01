@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2025-2026 IHE International.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.ihe.gazelle</groupId>
+        <artifactId>factory-bom-jdk21-quarkus-3-27</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <artifactId>maestro</artifactId>
+    <version>1.2.0</version>
+    <packaging>pom</packaging>
+
+    <organization>
+        <name>Kereval</name>
+        <url>https://www.kereval.com</url>
+    </organization>
+
+    <contributors>
+        <contributor>
+            <organization>IHE Catalyst</organization>
+            <organizationUrl>https://ihe-catalyst.net</organizationUrl>
+        </contributor>
+        <contributor>
+            <organization>Kereval</organization>
+            <organizationUrl>https://www.kereval.com</organizationUrl>
+        </contributor>
+        <contributor>
+            <organization>E-Health-Suisse</organization>
+            <organizationUrl>https://www.e-health-suisse.ch</organizationUrl>
+        </contributor>
+    </contributors>
+
+    <modules>
+        <module>maestro-api</module>
+        <module>maestro-client</module>
+        <module>maestro-engine</module>
+        <module>maestro-step</module>
+        <module>maestro-recording</module>
+        <module>maestro-quarkus</module>
+    </modules>
+
+    <scm>
+        <connection>scm:git:${git.project.url}</connection>
+        <developerConnection>scm:git:${git.project.url}</developerConnection>
+        <tag>1.2.0</tag>
+        <url>scm:git:${git.project.url}</url>
+    </scm>
+
+    <properties>
+        <!--git-->
+        <git.project.url>https://${git.user.name}:${git.user.token}@gitlab.inria.fr/gazelle/private/kereval/maestro.git</git.project.url>
+
+        <framework.version>4.1.0</framework.version>
+        <validation-api.version>2.1.0</validation-api.version>
+        <simulation-api.version>0.3.0</simulation-api.version>
+        <service-registry.version>2.0.1</service-registry.version>
+        <lang.version>3.0.0</lang.version>
+        <datahouse.version>4.3.0</datahouse.version>
+        <validation-service-clients.version>1.0.1</validation-service-clients.version>
+
+        <equalsverifier.version>3.16.1</equalsverifier.version>
+
+        <skipTests>false</skipTests>
+        <skipITs>${skipTests}</skipITs>
+        <skipUnitTests>${skipTests}</skipUnitTests>
+
+        <sonar.coverage.exclusions>
+            **/gazelle/maestro/mlang/**
+        </sonar.coverage.exclusions>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Simulation service API sub-modules dependencies -->
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-api</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-engine</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-recording</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>validation-step</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>simulation-step</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>user-interaction-step</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>itb-step</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>assertion-step</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+
+            <!-- Gazelle dependencies -->
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>framework</artifactId>
+                <version>${framework.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>validation-service-api</artifactId>
+                <version>${validation-api.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>simulation-service-api</artifactId>
+                <version>${simulation-api.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>service-registry-client</artifactId>
+                <version>${service-registry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>lang</artifactId>
+                <version>${lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-api</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-microprofile-rest-client</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kereval.gazelle</groupId>
+                <artifactId>datahouse-index-registration-client</artifactId>
+                <version>${datahouse.version}</version>
+            </dependency>
+
+            <!-- Test dependencies -->
+            <dependency>
+                <groupId>net.ihe.gazelle</groupId>
+                <artifactId>maestro-engine</artifactId>
+                <version>1.2.0</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>nl.jqno.equalsverifier</groupId>
+                <artifactId>equalsverifier</artifactId>
+                <version>${equalsverifier.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>IHE</id>
+            <name>IHE Public Maven Repository Group</name>
+            <url>https://nexus.ihe-catalyst.net/repository/maven-public/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>with-mlang</id>
+            <activation>
+                <property>
+                    <name>mlang</name>
+                </property>
+            </activation>
+            <modules>
+                <module>maestro-api</module>
+                <module>maestro-engine</module>
+                <module>maestro-step</module>
+                <module>mlang-converter</module>
+                <module>maestro-quarkus</module>
+            </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.ihe.gazelle</groupId>
+                        <artifactId>mlang-converter</artifactId>
+                        <version>1.2.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+    </profiles>
+
+</project>

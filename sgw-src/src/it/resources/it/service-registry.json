@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Mock_XDS_Simulator",
+    "version": "1.0.0",
+    "instanceId": "1234",
+    "replicaId": "12345",
+    "providedInterfaces": [
+      {
+        "interfaceName": "Simulation Service API",
+        "interfaceVersion": "1.0.0",
+        "bindings": [
+          {
+            "@type": "REST",
+            "serviceUrl": "http://localhost:"
+          }
+        ]
+      }
+    ],
+    "consumedInterfaces": null
+  }
+]
