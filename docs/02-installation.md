@@ -11,9 +11,12 @@
 - This directory must be **complete**. Besides what git provides you need two extra
   steps after cloning:
   - **Download the binaries tarball** (`IHE-Gazelle-docker-binaries.tar.gz`, ~513MB)
-    from Google Drive: **[GOOGLE-DRIVE-LINK-HERE]**
+    from Google Drive:
+    <https://drive.google.com/file/d/1qVVdGawFnavEfpxlayp78yEbQDo8eGVg/view?usp=sharing>
     and extract it at the repo root:
     ```bash
+    # browser: open the link above and click Download, save into the repo root; or CLI:
+    pip install gdown && gdown 1qVVdGawFnavEfpxlayp78yEbQDo8eGVg
     tar xzf IHE-Gazelle-docker-binaries.tar.gz   # populates downloads/ and keycloak/keycloak-config-cli-26.5.5.jar
     ```
     It contains ~480MB of pre-fetched binaries (Zulu JDK 7, the JBoss EAP zip, the
