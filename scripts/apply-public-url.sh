@@ -46,6 +46,16 @@ $KCADM update "clients/$(cid cas-gazelle-tm)" -r gazelle \
   -s "redirectUris=[\"${PUBLIC_URL}/tm/*\"]"
 echo "==> cas-gazelle-tm updated"
 
+# 3b. Realms default to sslRequired=EXTERNAL, which rejects plain-http logins
+#     coming from non-private client IPs ("HTTPS required" error page). Align it
+#     with the public scheme: http -> NONE, https -> EXTERNAL.
+SSL_REQUIRED=EXTERNAL
+[ "${PUBLIC_SCHEME}" = "http" ] && SSL_REQUIRED=NONE
+for REALM in master gazelle; do
+  $KCADM update "realms/${REALM}" -s "sslRequired=${SSL_REQUIRED}"
+done
+echo "==> sslRequired=${SSL_REQUIRED} on master + gazelle realms"
+
 # 4. Testing-session logos live in the TM database as absolute URLs
 docker exec gazelle-tm-db psql -U "${DB_USER}" -d "${DB_TM_NAME}" -c \
   "UPDATE tm_testing_session SET logo_url = regexp_replace(logo_url, '^https?://[^/]+', '${PUBLIC_URL}') WHERE logo_url ~ '^https?://';" >/dev/null

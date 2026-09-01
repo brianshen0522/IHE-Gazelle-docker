@@ -21,8 +21,16 @@
 
 **Apply**: `./scripts/apply-public-url.sh` — recreates affected containers, uses kcadm to
 update the two browser-facing clients' redirect URIs (`OIDC_GAZELLE_CLIENT`,
-`cas-gazelle-tm`), rewrites the testing-session logo URLs, and waits for TM. Realm
-migrations only run once per version, so URL changes must be pushed by this script.
+`cas-gazelle-tm`), aligns the realms' `sslRequired` with the scheme (see below),
+rewrites the testing-session logo URLs, and waits for TM. Realm migrations only run
+once per version, so URL changes must be pushed by this script.
+
+**Plain-http public addresses** (e.g. `http://<vm-ip>:8888` reached from other
+machines): Keycloak realms default to `sslRequired=EXTERNAL`, which rejects http
+logins from non-private client IPs with an "HTTPS required" error page. The apply
+script handles this automatically — `PUBLIC_SCHEME=http` sets `sslRequired=NONE` on
+the master and gazelle realms, `https` sets it back to `EXTERNAL`. (Local
+`gazelle.localhost` access never triggers it because the client IP is loopback.)
 
 ### Database
 
