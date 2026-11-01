@@ -4,9 +4,7 @@ import { DefaultJWT } from "next-auth/jwt";
 declare module "next-auth" {
   export interface Session extends DefaultSession {
     access_token: string;
-    refresh_token: string;
     expires_in: number;
-    id_token: string;
     user: {
       gazelleId: string;
       id: string;

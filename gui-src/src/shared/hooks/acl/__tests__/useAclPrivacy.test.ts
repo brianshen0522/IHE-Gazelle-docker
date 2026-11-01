@@ -26,9 +26,7 @@ describe("useAclPrivacy", () => {
       },
       access_token: "mock-token",
       expires: "2099-01-01",
-      refresh_token: "",
       expires_in: 0,
-      id_token: "",
       error: ""
   };
 

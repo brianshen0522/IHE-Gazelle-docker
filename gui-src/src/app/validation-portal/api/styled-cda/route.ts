@@ -19,6 +19,8 @@ const CLEANUP_INTERVAL_MS = 15 * 60 * 1000;
 const LOCK_STALE_MS = 60 * 1000;
 const LOCK_WAIT_TIMEOUT_MS = 20 * 1000;
 const LOCK_WAIT_INTERVAL_MS = 250;
+// Rendered from uploaded documents, so it must not run with the portal's origin.
+const RENDERED_DOCUMENT_CSP = "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'";
 
 type CacheEntry = {
   htmlPath: string;
@@ -398,7 +400,7 @@ export async function GET(req: NextRequest) {
 
     return new NextResponse(html, {
       status: 200,
-      headers: { "Content-Type": "text/html; charset=utf-8" },
+      headers: { "Content-Type": "text/html; charset=utf-8", "Content-Security-Policy": RENDERED_DOCUMENT_CSP },
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unable to render styled CDA document";

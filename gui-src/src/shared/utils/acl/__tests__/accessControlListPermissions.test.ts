@@ -36,9 +36,7 @@ const mockSession: Session = {
   user: mockUser,
   expires: "2026-12-31",
   access_token: "",
-  refresh_token: "",
   expires_in: 0,
-  id_token: "",
   error: "",
 };
 
@@ -46,9 +44,7 @@ const mockAdminSession: Session = {
   user: mockAdminUser,
   expires: "2026-12-31",
   access_token: "",
-  refresh_token: "",
   expires_in: 0,
-  id_token: "",
   error: "",
 };
 

@@ -3,6 +3,7 @@ import { DatahouseItem } from "@shared/types/datahouse/DatahouseItem";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@auth/authOptions";
 import { parseContent } from "@/app/message-capture/utils/parseContent";
+import { isAllowedOutboundUrl } from "@shared/utils/outboundUrl";
 
 export interface GetDatahouseItemProps {
   location?: string;
@@ -24,6 +25,9 @@ type HttpError = Error & { statusCode?: number };
  */
 function buildRequestUrl({ location, itemId, readAccessKey }: Pick<GetDatahouseItemProps, "location" | "itemId" | "readAccessKey">): string | null {
   if (location) {
+    if (!isAllowedOutboundUrl(new URL(location), [process.env.GZL_DTH_API_URL, process.env.BASE_URL])) {
+      throw new Error("URL not allowed");
+    }
     return location;
   }
 
@@ -101,7 +105,7 @@ export async function getDatahouseItem({
 
     // Fetch item
     const headers = buildHeaders(authHeader);
-    const res = await fetch(url, { headers });
+    const res = await fetch(url, { headers, redirect: "manual" });
 
     if (!res.ok) {
       throwHttpError(res.status, res.statusText);

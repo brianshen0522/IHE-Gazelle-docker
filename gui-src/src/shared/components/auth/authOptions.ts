@@ -98,9 +98,7 @@ export const authOptions = {
         session.user.organization = token.organization[0].replace("/", "");
         session.user.gazelleId = token.gazelleId;
       }
-      session.id_token = token.id_token;
       session.access_token = token.access_token;
-      session.refresh_token = token.refresh_token;
       session.expires_in = token.expires_at;
       return session;
     },
