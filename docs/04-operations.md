@@ -91,6 +91,6 @@ docker compose restart jboss keycloak gum
 curl -s -o /dev/null -w '%{http_code}\n' localhost:8888/tm/home.seam        # 200
 curl -s localhost:8888/auth/realms/gazelle/.well-known/openid-configuration | head -c 80
 curl -s -o /dev/null -w '%{http_code}\n' localhost:8888/gazelle/home        # 200
-curl -s localhost:8888/mailpit/api/v1/messages | head -c 40
+curl -s -u "$SMTP_USERNAME:$SMTP_PASSWORD" localhost:8888/mailpit/api/v1/messages | head -c 40
 docker compose ps   # everything Up; keycloak/db/registry/mailpit/jboss show (healthy)
 ```

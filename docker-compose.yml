@@ -18,7 +18,7 @@ services:
       - ./authdb/00-md5-password.sh:/docker-entrypoint-initdb.d/00-md5-password.sh:ro
       - ./authdb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     ports:
-      - "${DB_PUBLISHED_PORT}:5432"
+      - "${DB_BIND_ADDRESS:-127.0.0.1}:${DB_PUBLISHED_PORT}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_TM_NAME}"]
       interval: 10s
@@ -191,6 +191,7 @@ services:
       MP_SMTP_TLS_CERT: /certs/cert.pem
       MP_SMTP_TLS_KEY: /certs/key.pem
       MP_SMTP_REQUIRE_STARTTLS: "true"
+      MP_UI_AUTH: "${MAILPIT_UI_USERNAME:-${SMTP_USERNAME}}:${MAILPIT_UI_PASSWORD:-${SMTP_PASSWORD}}"
       MP_WEBROOT: /mailpit
     volumes:
       - ./mailpit/certs:/certs:ro
@@ -461,8 +462,8 @@ services:
       gazelle_master_model: "${PUBLIC_URL}/tm"
       gazelle_proxy_url: "${PUBLIC_URL}/proxy"
       gwt_url: "${PUBLIC_URL}/tm"
-      ip_login: "true"
-      ip_login_admin: ".*"
+      ip_login: "false"
+      ip_login_admin: "none"
       is_master_model: "true"
       is_product_registry: "false"
       is_test_management: "true"

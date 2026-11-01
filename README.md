@@ -59,9 +59,9 @@ served by gazelle-nginx; individual services expose no host ports).
 | User management | `/gazelle/user-management/users` | SSO (gazelle_admin) |
 | Validation portal | `/gazelle/validation-portal/profiles` | SSO |
 | Simulation portal | `/gazelle/simulation-portal/sequences` | SSO |
-| Mailpit inbox | `/mailpit/` | — |
+| Mailpit inbox | `/mailpit/` | HTTP Basic: `MAILPIT_UI_USERNAME` / `MAILPIT_UI_PASSWORD`, defaulting to `SMTP_USERNAME` / `SMTP_PASSWORD` |
 | GUM / Registry / Gateways / Maestro / XVS APIs | `/gum` `/service-registry` `/simulation-gateway` `/validation-gateway` `/maestro` `/xml-validation-service` | m2m JWT |
-| TM PostgreSQL | `localhost:5433` (only direct port) | `DB_USER` / `DB_PASSWORD` from `.env` |
+| TM PostgreSQL | `127.0.0.1:5433` (only direct port; see `DB_BIND_ADDRESS`) | `DB_USER` / `DB_PASSWORD` from `.env` |
 
 ## The three most important operational rules
 

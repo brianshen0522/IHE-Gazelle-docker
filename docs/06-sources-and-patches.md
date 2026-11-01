@@ -83,6 +83,8 @@ Rebuilding a Quarkus service: build the `*-src/` tree with Maven (JDK 25) → co
 3. Custom home page: `gui-home/` (`home.html` + `menu.yaml`, mounted via
    `GZL_HOME_CONFIGURATION_FOLDER`; templates support `${SCHEME}`/`${FQDN}`
    substitution)
+4. Proxy-style routes (`api/datahouse-proxy`, `home/api/check-*`) only call origins from
+   `BASE_URL` / `GZL_DTH_API_URL`; the runner image uses the non-root `nextjs` user
 
 ### Keycloak
 

@@ -6,6 +6,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 set -a; source .env; set +a
 
+if grep -q '=change-me-' .env; then
+  echo "WARNING: .env still contains change-me-* placeholders; replace them before exposing this stack" >&2
+fi
+
 echo "==> applying PUBLIC_URL=${PUBLIC_URL}"
 case "$PUBLIC_URL" in
   "${PUBLIC_SCHEME}://${PUBLIC_HOST}"*) ;;
@@ -36,9 +40,12 @@ $KCADM config credentials --server http://localhost:8180/auth --realm master \
 
 cid() { $KCADM get clients -r gazelle -q "clientId=$1" --fields id --format csv --noquotes; }
 
+# localhost redirects are a local-development convenience only
+REDIRECT_URIS="\"${PUBLIC_URL}/*\""
+[ "${PUBLIC_SCHEME}" = "http" ] && REDIRECT_URIS="${REDIRECT_URIS},\"http://localhost*\""
 $KCADM update "clients/$(cid OIDC_GAZELLE_CLIENT)" -r gazelle \
   -s "rootUrl=${PUBLIC_URL}/" \
-  -s "redirectUris=[\"${PUBLIC_URL}/*\",\"http://localhost*\"]" \
+  -s "redirectUris=[${REDIRECT_URIS}]" \
   -s "webOrigins=[\"${PUBLIC_URL}\",\"+\"]"
 echo "==> OIDC_GAZELLE_CLIENT updated"
 

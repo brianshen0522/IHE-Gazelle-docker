@@ -73,4 +73,4 @@ rm -f /usr/local/jboss7/standalone/deployments/gazelle-tm.ear.{failed,undeployed
 export JAVA_OPTS="-server ${JAVA_OPTS_EXTRA:- -Xms512m -Xmx2048m -XX:MaxPermSize=768m -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8} -Djava.awt.headless=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.security.egd=file:/dev/./urandom -Dorg.apache.coyote.http11.Http11Protocol.MAX_HEADER_SIZE=32768"
 
 echo "[entrypoint] starting JBoss"
-exec /usr/local/jboss7/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+exec /usr/local/jboss7/bin/standalone.sh -b 0.0.0.0 -bmanagement 127.0.0.1

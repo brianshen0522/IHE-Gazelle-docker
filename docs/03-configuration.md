@@ -39,6 +39,7 @@ the master and gazelle realms, `https` sets it back to `EXTERNAL`. (Local
 | `DB_USER` / `DB_PASSWORD` | Shared credentials for all three databases (the password must be stored as **md5** — handled automatically at initdb time by `authdb/00-md5-password.sh`) |
 | `DB_TM_NAME` | TM database name (`gazelle-tm`) |
 | `DB_PUBLISHED_PORT` | PG port published to the host (5433) |
+| `DB_BIND_ADDRESS` | Host address for that port (default `127.0.0.1`) |
 
 ### Keycloak / SSO
 
@@ -65,6 +66,7 @@ Keycloak (password reset / verification mail), GUM (registration / account mail)
 | `SMTP_SSL` | `true/false` — implicit TLS / SMTPS (465); mutually exclusive with STARTTLS |
 | `SMTP_FROM_DOMAIN` | Sender = `no-reply@<this domain>` (also written into TM's `application_no_reply_email`) |
 | `SMTP_MOCK_ENABLED` | GUM mock mode (true = log only, never send); keep `false` with a real server |
+| `MAILPIT_UI_USERNAME` / `MAILPIT_UI_PASSWORD` | Login for the `/mailpit/` inbox and API (default `SMTP_USERNAME` / `SMTP_PASSWORD`) |
 | `SMTP_TRUST_ALL` | `true` for self-signed servers (the built-in mailpit); `false` for real servers with public CAs (affects GUM only; Keycloak/TM use the CA trust chain below) |
 
 **Apply**: `docker compose up -d` (TM's mail configuration is re-rendered from env into

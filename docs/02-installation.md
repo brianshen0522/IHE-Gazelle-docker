@@ -82,9 +82,10 @@ ORG_SHORT=MY-LAB ORG_NAME='My Lab' \
 ```
 
 Defaults when no variables are given (defined at the top of the script): the email falls
-back to `SSO_ADMIN_EMAIL` from `.env`, the password to `GazelleAdmin.2026`, the
-organization to `KEREVAL-LAB` / `Brian Test Lab` — **always override these outside a
-throwaway dev environment**. Password policy: at least 8 characters with upper/lower
+back to `SSO_ADMIN_EMAIL` from `.env`, the organization to `KEREVAL-LAB` /
+`Brian Test Lab` — **always override these outside a throwaway dev environment**.
+`ADMIN_PASSWORD` has no default and must be set. If the public proxy uses a private
+CA, also set `BOOTSTRAP_INSECURE_TLS=true`. Password policy: at least 8 characters with upper/lower
 case, a digit and a special character.
 
 Subsequent users are not created by the script: use the GUI's user management (Create
@@ -95,12 +96,11 @@ Forgot Password flow (requires working SMTP) or the Keycloak admin console.
 
 - [ ] `KC_ADMIN_PASSWORD` is not `admin` or a placeholder
 - [ ] every `*_M2M_SECRET`, `NEXTAUTH_SECRET` and `SSO_CLIENTS_ADMIN_PASSWORD` is random
-- [ ] `DB_PUBLISHED_PORT` (5433) is not exposed to untrusted networks (or remove the
-      `ports` entry entirely)
-- [ ] the bootstrap SSO admin password was customized
+- [ ] `DB_BIND_ADDRESS` stays on loopback, or `DB_PUBLISHED_PORT` (5433) is firewalled
+      from untrusted networks (or remove the `ports` entry entirely)
 - [ ] SMTP points at a real server, `SMTP_TRUST_ALL=false`, `SMTP_MOCK_ENABLED=false`
-- [ ] the `/mailpit/` route is removed from nginx or access-restricted (the inbox is
-      readable by anyone)
+- [ ] the `/mailpit/` route is removed from nginx or `MAILPIT_UI_PASSWORD` is set (the
+      inbox holds password-reset links; its login defaults to the SMTP credentials)
 
 ## Choose the public address
 
@@ -154,7 +154,7 @@ docker compose logs -f jboss          # or: curl -s -o /dev/null -w '%{http_code
 | TM's Log in (CAS) | no second password prompt (SSO), user + Administration menu top-right |
 | `/gazelle/user-management/users` | lists the bootstrap admin |
 | `/gazelle/validation-portal/profiles` | lists the demo validation profiles (≥2) |
-| `${PUBLIC_URL}/mailpit/` | Mailpit inbox opens |
+| `${PUBLIC_URL}/mailpit/` | Mailpit inbox opens after HTTP Basic login |
 | Forgot-password flow (login page) | the email appears in mailpit |
 
 ## Common installation failures

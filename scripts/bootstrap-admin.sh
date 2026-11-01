@@ -10,9 +10,13 @@ set -a; source .env; set +a
 ADMIN_EMAIL="${ADMIN_EMAIL:-${SSO_ADMIN_EMAIL}}"
 ADMIN_FIRST="${ADMIN_FIRST:-Brian}"
 ADMIN_LAST="${ADMIN_LAST:-Shen}"
-ADMIN_PASSWORD="${ADMIN_PASSWORD:-GazelleAdmin.2026}"
+[ -n "${ADMIN_PASSWORD:-}" ] || { echo "ERROR: set ADMIN_PASSWORD to the password for the new admin"; exit 1; }
 ORG_SHORT="${ORG_SHORT:-KEREVAL-LAB}"
 ORG_NAME="${ORG_NAME:-Brian Test Lab}"
+
+# Set BOOTSTRAP_INSECURE_TLS=true only if the public proxy uses a private CA
+CURL_TLS=()
+[ "${BOOTSTRAP_INSECURE_TLS:-false}" = "true" ] && CURL_TLS=(-k)
 
 KCADM="docker exec gazelle-keycloak /opt/keycloak/bin/kcadm.sh"
 DB="docker exec gazelle-tm-db psql -U ${DB_USER}"
@@ -39,11 +43,11 @@ $DB -d gum -c "INSERT INTO gum.user_group (user_id, group_id) VALUES ('${USER_ID
 echo "== 4. Create organization via GUM API (syncs to TM over MQTT)"
 # Token must be requested through the PUBLIC URL so its issuer matches what GUM
 # verifies (KC_HOSTNAME_BACKCHANNEL_DYNAMIC makes internal-URL tokens unusable).
-TOK=$(curl -sk -X POST "${PUBLIC_URL}/auth/realms/gazelle/protocol/openid-connect/token" \
+TOK=$(curl -s ${CURL_TLS[@]+"${CURL_TLS[@]}"} -X POST "${PUBLIC_URL}/auth/realms/gazelle/protocol/openid-connect/token" \
   -d "grant_type=client_credentials&client_id=m2m-gazelle-tm&client_secret=${TM_M2M_SECRET}" \
   | python3 -c 'import json,sys; print(json.load(sys.stdin).get("access_token",""))')
 [ -n "$TOK" ] || { echo "ERROR: could not obtain m2m token"; exit 1; }
-curl -sk -H "Authorization: Bearer ${TOK}" -H 'Content-Type: application/json' -X POST \
+curl -s ${CURL_TLS[@]+"${CURL_TLS[@]}"} -H "Authorization: Bearer ${TOK}" -H 'Content-Type: application/json' -X POST \
   -d "{\"shortname\":\"${ORG_SHORT}\",\"name\":\"${ORG_NAME}\"}" \
   "${PUBLIC_URL}/gum/rest/organizations"
 echo
@@ -56,4 +60,4 @@ $DB -d gum -c "UPDATE gum.\"user\" SET organization_id='${ORG_ID}' WHERE id='${U
 echo "== 6. Clear Keycloak user cache (federation cache still holds the pre-attach snapshot)"
 $KCADM create clear-user-cache -r gazelle
 
-echo "Done. Log in at ${PUBLIC_URL}/tm with ${ADMIN_EMAIL} / ${ADMIN_PASSWORD}"
+echo "Done. Log in at ${PUBLIC_URL}/tm as ${ADMIN_EMAIL}"
