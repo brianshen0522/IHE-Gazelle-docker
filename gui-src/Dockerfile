@@ -17,7 +17,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.json next.config.t
 RUN printf '%s\n' \
   '@gazelle:registry=https://nexus.ihe-catalyst.net/repository/npm-public/' \
   'registry=https://registry.npmjs.org' \
-  'strict-ssl=false' \
   'loglevel=notice' \
   > .npmrc
 
@@ -62,8 +61,8 @@ COPY --chown=nextjs:nodejs resources /app/.next/standalone/resources
 COPY --chown=nextjs:nodejs public /app/.next/standalone/public
 
 # Set the user to 'nextjs' for running the app
-#USER nextjs [Error: EACCES: permission denied, mkdir '/opt/gazelle-user-interface/home']
-USER root
+RUN mkdir -p /opt/gazelle-user-interface && chown nextjs:nodejs /opt/gazelle-user-interface
+USER nextjs
 
 # Start the application
 CMD ["node", "/app/.next/standalone/server.js"]

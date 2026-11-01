@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
+import { isAllowedOutboundUrl } from "@shared/utils/outboundUrl";
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,7 +11,11 @@ export async function GET(req: NextRequest) {
     }
 
     const url = new URL(versionUrl);
-    const response = await axios.get(url.toString());
+    if (!isAllowedOutboundUrl(url, [process.env.BASE_URL])) {
+      return NextResponse.json({ error: "URL not allowed" }, { status: 403 });
+    }
+
+    const response = await axios.get(url.toString(), { maxRedirects: 0 });
 
     if (response.status < 200 || response.status >= 300) {
       return NextResponse.json({});

@@ -10,3 +10,8 @@ allowBuilds:
   unrs-resolver: false
 minimumReleaseAgeExclude:
   - "@gazelle/gazelle-component-ui"
+overrides:
+  next-auth: ^4.24.15
+  engine.io: ^6.6.10
+  follow-redirects: ^1.16.2
+  socket.io-parser: ^4.2.7

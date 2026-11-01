@@ -4,6 +4,15 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { Route } from "next";
 
+function isSameOriginUrl(url: string): boolean {
+  const origin = globalThis.location?.origin ?? "http://localhost";
+  try {
+    return new URL(url, origin).origin === origin;
+  } catch {
+    return false;
+  }
+}
+
 export default function useSignInAutoRedirect() {
   const router = useRouter();
   const pathname = usePathname();
@@ -13,7 +22,7 @@ export default function useSignInAutoRedirect() {
   const callBackUrl = useMemo(() => {
     let url = searchParams.get("callbackUrl") ?? pathname;
 
-    if (url.includes("api")) {
+    if (url.includes("api") || !isSameOriginUrl(url)) {
       url = "/";
     }
 

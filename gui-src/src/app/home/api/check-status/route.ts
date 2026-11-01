@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { isAllowedOutboundUrl } from '@shared/utils/outboundUrl';
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,7 +10,11 @@ export async function GET(req: NextRequest) {
     }
 
     const url = new URL(status);
-    const response = await fetch(url, { method: 'HEAD' });
+    if (!isAllowedOutboundUrl(url, [process.env.BASE_URL])) {
+      return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
+    }
+
+    const response = await fetch(url, { method: 'HEAD', redirect: 'manual' });
 
     return NextResponse.json({ status: response.status });
   } catch (err: any) {

@@ -2,6 +2,7 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthorizationHeader } from "@shared/services/getServerAuthHeader";
 import { parseContent } from "@/app/message-capture/utils/parseContent";
+import { isAllowedOutboundUrl } from "@shared/utils/outboundUrl";
 
 /**
  * Generic proxy for external Datahouse URLs
@@ -24,13 +25,16 @@ export async function GET(req: NextRequest) {
 
     // Build the final URL with readAccessKey if provided
     const url = new URL(targetUrl);
+    if (!isAllowedOutboundUrl(url, [process.env.GZL_DTH_API_URL, process.env.BASE_URL])) {
+      return NextResponse.json({ error: "URL not allowed" }, { status: 403 });
+    }
     if (readAccessKey) {
       url.searchParams.append("readAccessKey", readAccessKey);
     }
 
     // Get authentication header if available
     const auth = await getAuthorizationHeader(req);
-    const axiosConfig = auth ? { headers: { Authorization: auth } } : undefined;
+    const axiosConfig = { maxRedirects: 0, ...(auth ? { headers: { Authorization: auth } } : {}) };
 
     // Fetch from external URL
     const response = await axios.get(url.toString(), axiosConfig);
