@@ -14,6 +14,7 @@
 | GUI session shows organization: null after login | Keycloak's user-federation cache holds the pre-org-attach snapshot | `kcadm create clear-user-cache -r gazelle`, then log in again (bootstrap does this automatically) |
 | Login spins and returns unauthenticated / NextAuth callback 502 | front proxy buffers too small for the large Set-Cookie | add `proxy_buffer_size 32k; proxy_buffers 8 32k; proxy_busy_buffers_size 64k;` on the proxy |
 | **400 Request Header Or Cookie Too Large** | Keycloak + NextAuth cookies exceed 8k; three layers each have limits | this stack's nginx (`large_client_header_buffers 8 32k`) and TM (`MAX_HEADER_SIZE=32768`) are already fixed; **the external proxy needs the same** (defaults drop connections around 16k). Still failing → clear the domain's cookies |
+| kcadm, a service or the admin console gets `invalid_grant` with the right password | the master realm locks an account for a while after 10 failed logins | wait (15 minutes at most), or unlock the user in the admin console (master realm → Users) |
 | Which layer produced a 400? | — | `Transfer-Encoding: chunked` = the backend (JBoss) produced it, nginx proxied it; `Content-Length` = nginx's own (never trust the Server header — nginx rewrites it) |
 
 ## URLs / redirects

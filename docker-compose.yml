@@ -1,10 +1,15 @@
 # 固定 compose 專案名(volume/network 前綴),避免資料夾改名造成 volume 改指
 name: ihe-gazelle-docker
 
+x-hardened: &hardened
+  security_opt:
+    - no-new-privileges:true
+
 services:
   db:
     image: postgres:17-alpine
     container_name: gazelle-tm-db
+    <<: *hardened
     # md5 password mode: TM's legacy JDBC driver (42.2.1.jre7 / Java 7) cannot do SCRAM
     command: ["postgres", "-c", "password_encryption=md5", "-c", "max_prepared_transactions=100"]
     environment:
@@ -29,6 +34,7 @@ services:
   mqtt:
     image: eclipse-mosquitto:2
     container_name: gazelle-tm-mqtt
+    <<: *hardened
     volumes:
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     restart: unless-stopped
@@ -36,6 +42,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: gazelle-nginx
+    <<: *hardened
     networks:
       default:
         aliases:
@@ -51,6 +58,7 @@ services:
       context: ./keycloak
     image: gazelle-keycloak:26.6.4-jdk25
     container_name: gazelle-keycloak
+    <<: *hardened
     depends_on:
       db:
         condition: service_healthy
@@ -98,8 +106,8 @@ services:
       KC_TRUSTSTORE_PATHS: /opt/keycloak/conf/smtp-ca/ca.pem
     volumes:
       - ./mailpit/certs/ca.pem:/opt/keycloak/conf/smtp-ca/ca.pem:ro
-      - ./keycloak/scripts:/opt/startup-scripts
-      - ./keycloak/realm-migration:/realm-migration
+      - ./keycloak/scripts:/opt/startup-scripts:ro
+      - ./keycloak/realm-migration:/realm-migration:ro
       - ./keycloak/providers/keycloak-protocol-cas-26.6.3.jar:/opt/keycloak/providers/keycloak-protocol-cas.jar:ro
       - ./keycloak/providers/keycloak-theme-5.0.1.jar:/opt/keycloak/providers/keycloak-theme.jar:ro
       - ./keycloak/providers/keycloak-provider-shaded.jar:/opt/keycloak/providers/keycloak-provider-shaded.jar:ro
@@ -124,6 +132,7 @@ services:
       context: ./gum
     image: gazelle-gum:5.0.1
     container_name: gazelle-gum
+    <<: *hardened
     depends_on:
       db:
         condition: service_healthy
@@ -183,8 +192,9 @@ services:
 
   # 假 SMTP server(開發/測試用):強制 STARTTLS、要求帳密,收信匣在 /mailpit/
   mailpit:
-    image: axllent/mailpit:v1.27
+    image: axllent/mailpit:v1.33.0
     container_name: gazelle-mailpit
+    <<: *hardened
     environment:
       TZ: ${TZ}
       MP_SMTP_AUTH: "${SMTP_USERNAME}:${SMTP_PASSWORD}"
@@ -200,6 +210,7 @@ services:
   static-sim:
     image: nginx:alpine
     container_name: gazelle-static-sim
+    <<: *hardened
     volumes:
       - ./static-sim/www:/usr/share/nginx/html:ro
       - ./static-sim/default.conf:/etc/nginx/conf.d/default.conf:ro
@@ -212,6 +223,7 @@ services:
         APPDIR: quarkus-app
     image: gazelle-service-registry:2.1.0
     container_name: gazelle-service-registry
+    <<: *hardened
     volumes:
       - ./sreg-config/services.json:/opt/service-registry/services.json:ro
     healthcheck:
@@ -244,6 +256,7 @@ services:
         APPDIR: quarkus-app
     image: gazelle-simulation-gateway:0.3.2
     container_name: gazelle-simulation-gateway
+    <<: *hardened
     depends_on:
       service-registry:
         condition: service_healthy
@@ -272,6 +285,7 @@ services:
         APPDIR: quarkus-app
     image: gazelle-validation-gateway:1.0.2
     container_name: gazelle-validation-gateway
+    <<: *hardened
     depends_on:
       service-registry:
         condition: service_healthy
@@ -302,6 +316,7 @@ services:
         APPDIR: quarkus-app
     image: gazelle-xml-validation-service:3.1.1
     container_name: gazelle-xml-validation
+    <<: *hardened
     depends_on:
       service-registry:
         condition: service_healthy
@@ -334,6 +349,7 @@ services:
         APPDIR: quarkus-app
     image: gazelle-maestro:1.2.0
     container_name: gazelle-maestro
+    <<: *hardened
     depends_on:
       service-registry:
         condition: service_healthy
@@ -363,6 +379,7 @@ services:
       context: ./gui-src
     image: gazelle-gui:4.0.0
     container_name: gazelle-gui
+    <<: *hardened
     depends_on:
       gum:
         condition: service_started
@@ -399,6 +416,7 @@ services:
       dockerfile: jboss/Dockerfile
     image: gazelle-tm-jboss:12.1.0
     container_name: gazelle-tm-app
+    <<: *hardened
     platform: linux/amd64
     depends_on:
       db:

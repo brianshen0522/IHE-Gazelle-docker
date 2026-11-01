@@ -21,7 +21,7 @@
 | `xml-validation-service` | gazelle-xml-validation | gazelle-xml-validation-service:3.1.1 | Quarkus / JDK 25 | 8084 | XSD / Schematron validator |
 | `maestro` | gazelle-maestro | gazelle-maestro:1.2.0 | Quarkus / JDK 25 | 8150 | Validation orchestrator (standalone mode) |
 | `static-sim` | gazelle-static-sim | nginx:alpine | — | 80 | Static simulator sequences demo |
-| `mailpit` | gazelle-mailpit | axllent/mailpit:v1.27 | — | 1025 / 8025 | Fake SMTP server (STARTTLS + auth enforced) + inbox UI |
+| `mailpit` | gazelle-mailpit | axllent/mailpit:v1.33.0 | — | 1025 / 8025 | Fake SMTP server (STARTTLS + auth enforced) + inbox UI |
 
 **Apart from nginx's 8888 and the database's 5433, no service publishes a host port**;
 browser traffic always flows `${PUBLIC_URL}` → external TLS proxy → this host's `:8888`
